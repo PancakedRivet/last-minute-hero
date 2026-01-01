@@ -39,26 +39,7 @@ function draw_player(player)
 end
 
 function draw_status(player)
- draw_hp_bar(player)
  print("Health: "..player.health.."/"..player.max_health, 1, 9, 8)
  print("Attack: "..player.attack, 1, 17, 8)
  print("Defense: "..player.defense, 1, 25, 8)
-end
-
-function draw_hp_bar(player)
- local bar_width = 40
- local bar_height = 8
- local health_ratio = player.health / player.max_health
- local filled_width = flr(bar_width * health_ratio)
-
- local health_color = 11 -- Green by default
- if health_ratio < 0.5 then
-    health_color = 10 -- Yellow
- end
- if health_ratio < 0.2 then
-    health_color = 8 -- Red
- end
- 
- rectfill(0, 0, bar_width, bar_height, 0) -- Background
- rectfill(0, 0, filled_width, bar_height, health_color) -- Filled part
 end
