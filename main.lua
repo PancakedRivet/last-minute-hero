@@ -1,19 +1,46 @@
 function _init()
  -- Initialization code here
- new_game()
- game_state = game_states.playing
+ player = new_player()
+ game_state = game_states.menu
+ game_duration_max_secs = 60
+ game_tick = 0
+ game_fps = 30
 end
 
 function _update()
  -- Update logic here
- update_position(player)
- game_timer_frames -= 1
+ if game_state == game_states.menu then
+    if btnp(❎) then
+        game_state = game_states.playing
+    end
+ end
+ if game_state == game_states.playing then
+    game_tick += 1
+    if game_tick % game_fps == 0 then
+        timer_health_tick(player, game_duration_max_secs)
+    end
+    if player.health <= 0 then
+       game_state = game_states.game_over
+    end
+    update_position(player)
+ end
 end
 
 function _draw()
  cls()
- draw_player(player)
- draw_status(player)
- draw_status_bar(game_timer_frames, game_timer_frames_max, 1, 1, 128, 2, game_sprites.timer)
- draw_status_bar(player.health, player.max_health, 1, 5, 40, 2, game_sprites.health)
+ if game_state == game_states.menu then
+    print("Press ❎ to Start", 40, 60, 7)
+    return
+ end
+ if game_state == game_states.game_over then
+    print("Game Over!", 50, 60, 8)
+    return
+ end
+ if game_state == game_states.playing then
+    draw_player(player)
+    draw_status(player)
+    draw_status_bar(player.health, player.max_health, 9, 3, 118, 4) 
+    -- Health sprite in top left corner
+    spr(game_sprites.health, 1, 1)
+ end
 end

@@ -6,8 +6,8 @@ function new_player()
         sp_flipx=false,
         sp_flipy=false,
         speed=2,
-        health=100,
-        max_health=100,
+        health=60,
+        max_health=60,
         attack=10,
         defense=5
     }
@@ -42,4 +42,12 @@ function draw_status(player)
  print("Health: "..player.health.."/"..player.max_health, 1, 9, 8)
  print("Attack: "..player.attack, 1, 17, 8)
  print("Defense: "..player.defense, 1, 25, 8)
+end
+
+function timer_health_tick(player, game_duration_max_secs)
+    -- Decrease player health over time
+    tick_value = player.max_health / game_duration_max_secs
+    if player.health > 0 then
+        player.health -= tick_value
+    end
 end
