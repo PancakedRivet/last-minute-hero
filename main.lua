@@ -4,6 +4,8 @@ function _init()
  game_duration_max_secs = 60
  game_tick = 0
  game_fps = 30
+ max_enemies = 5
+ enemies = {}
 end
 
 function _update()
@@ -22,6 +24,7 @@ function _update()
        game_state = game_states.game_over
     end
     update_position(player)
+    update_enemies()
  end
 end
 
@@ -43,5 +46,9 @@ function _draw()
     draw_status_bar(player.health, player.max_health, 9, 3, 116, 4) 
     -- Health sprite in top left corner
     spr(game_sprites.health, 1, 1)
+    -- Draw enemies
+    for enemy in all(enemies) do
+        spr(game_sprites.enemy, enemy.x, enemy.y)
+    end
  end
 end
