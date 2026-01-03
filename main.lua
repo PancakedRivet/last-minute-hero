@@ -1,7 +1,6 @@
 function _init()
  -- Initialization code here
- player = new_player()
- game_state = game_states.menu
+ game_state = game_states.new_game
  game_duration_max_secs = 60
  game_tick = 0
  game_fps = 30
@@ -9,9 +8,9 @@ end
 
 function _update()
  -- Update logic here
- if game_state == game_states.menu then
+ if game_state == game_states.new_game or game_state == game_states.game_over then
     if btnp(❎) then
-        game_state = game_states.playing
+        new_game()
     end
  end
  if game_state == game_states.playing then
@@ -28,7 +27,7 @@ end
 
 function _draw()
  cls()
- if game_state == game_states.menu then
+ if game_state == game_states.new_game then
     print("Press ❎ to Start", 40, 60, 7)
     return
  end

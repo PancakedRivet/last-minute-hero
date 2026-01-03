@@ -1,5 +1,5 @@
 game_states = {
-    menu = 0,
+    new_game = 0,
     playing = 1,
     game_over = 2
 }
@@ -7,6 +7,11 @@ game_states = {
 game_sprites = {
     health = 2,
 }
+
+function new_game()
+    player = new_player()
+    game_state = game_states.playing
+end
 
 function draw_status_bar(current_value, max_value, x, y, width, height)
  local x = x or 0
