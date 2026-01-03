@@ -15,22 +15,35 @@ function new_player()
 end
 
 function update_position(player)
+    local max_pos_x = 122
+    local max_pos_y = 120
+    local min_pos_x = -2
+    local min_pos_y = 10
+
  if btn(⬅️) then
-  player.x -= player.speed
+    if player.x - player.speed > min_pos_x then
+     player.x -= player.speed
+    end
   player.sp_flipx = true
  end
  
  if btn(➡️) then
-  player.x += player.speed
+    if player.x + player.speed < max_pos_x then
+        player.x += player.speed
+    end
   player.sp_flipx = false
  end
  
  if btn(⬆️) then
-  player.y -= player.speed
+    if player.y - player.speed > min_pos_y then
+        player.y -= player.speed
+    end
  end
  
  if btn(⬇️) then
-  player.y += player.speed
+    if player.y + player.speed < max_pos_y then
+        player.y += player.speed
+    end
  end
 end
 
@@ -39,9 +52,9 @@ function draw_player(player)
 end
 
 function draw_status(player)
- print("Health: "..player.health.."/"..player.max_health, 1, 9, 8)
- print("Attack: "..player.attack, 1, 17, 8)
- print("Defense: "..player.defense, 1, 25, 8)
+ print("Health: "..player.health.."/"..player.max_health, 1, 12, 8)
+ print("Attack: "..player.attack, 1, 20, 8)
+ print("Defense: "..player.defense, 1, 28, 8)
 end
 
 function timer_health_tick(player, game_duration_max_secs)

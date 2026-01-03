@@ -36,9 +36,11 @@ function _draw()
     return
  end
  if game_state == game_states.playing then
+    map()
     draw_player(player)
     draw_status(player)
-    draw_status_bar(player.health, player.max_health, 9, 3, 118, 4) 
+    rectfill(0, 0, 128, 10, 6) -- UI Background
+    draw_status_bar(player.health, player.max_health, 9, 3, 116, 4) 
     -- Health sprite in top left corner
     spr(game_sprites.health, 1, 1)
  end
