@@ -14,12 +14,12 @@ function new_game()
     game_state = game_states.playing
 end
 
-function draw_status_bar(current_value, max_value, x, y, width, height)
- local x = x or 0
- local y = y or 0
- local bar_width = width or 40
- local bar_height = height or 8
- local bar_ratio = current_value / max_value
+function draw_status_bar(_current_value, _max_value, _x, _y, _width, _height)
+ local x = _x or 0
+ local y = _y or 0
+ local bar_width = _width or 40
+ local bar_height = _height or 8
+ local bar_ratio = _current_value / _max_value
  local filled_width = flr(bar_width * bar_ratio)
  local border_width = 1
 
@@ -64,7 +64,7 @@ function new_enemy()
         x=enemy_x,
         y=enemy_y,
         health=20,
-        speed=0.5,
+        speed=1,
     }
     return enemy
 end

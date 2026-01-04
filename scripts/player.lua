@@ -14,53 +14,53 @@ function new_player()
     return player
 end
 
-function update_position(player)
+function update_position(_player)
     local max_pos_x = 122
     local max_pos_y = 120
     local min_pos_x = -2
     local min_pos_y = 10
 
  if btn(⬅️) then
-    if player.x - player.speed > min_pos_x then
-     player.x -= player.speed
+    if _player.x - _player.speed > min_pos_x then
+     _player.x -= _player.speed
     end
-  player.sp_flipx = true
+  _player.sp_flipx = true
  end
  
  if btn(➡️) then
-    if player.x + player.speed < max_pos_x then
-        player.x += player.speed
+    if _player.x + _player.speed < max_pos_x then
+        _player.x += _player.speed
     end
-  player.sp_flipx = false
+  _player.sp_flipx = false
  end
  
  if btn(⬆️) then
-    if player.y - player.speed > min_pos_y then
-        player.y -= player.speed
+    if _player.y - _player.speed > min_pos_y then
+        _player.y -= _player.speed
     end
  end
  
  if btn(⬇️) then
-    if player.y + player.speed < max_pos_y then
-        player.y += player.speed
+    if _player.y + _player.speed < max_pos_y then
+        _player.y += _player.speed
     end
  end
 end
 
-function draw_player(player)
- spr(player.sp, player.x, player.y, 1, 1, player.sp_flipx, player.sp_flipy)
+function draw_player(_player)
+ spr(_player.sp, _player.x, _player.y, 1, 1, _player.sp_flipx, _player.sp_flipy)
 end
 
-function draw_status(player)
- print("Health: "..player.health.."/"..player.max_health, 1, 12, 8)
- print("Attack: "..player.attack, 1, 20, 8)
- print("Defense: "..player.defense, 1, 28, 8)
+function draw_status(_player)
+ print("Health: ".._player.health.."/".._player.max_health, 1, 12, 8)
+ print("Attack: ".._player.attack, 1, 20, 8)
+ print("Defense: ".._player.defense, 1, 28, 8)
 end
 
-function timer_health_tick(player, game_duration_max_secs)
+function timer_health_tick(_player, _game_duration_max_secs)
     -- Decrease player health over time
-    tick_value = player.max_health / game_duration_max_secs
-    if player.health > 0 then
-        player.health -= tick_value
+    tick_value = _player.max_health / _game_duration_max_secs
+    if _player.health > 0 then
+        _player.health -= tick_value
     end
 end
