@@ -25,6 +25,7 @@ function _update()
     end
     update_position(player)
     update_enemies()
+    update_attack(player)
  end
 end
 

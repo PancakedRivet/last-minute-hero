@@ -9,6 +9,7 @@ function new_player()
         health=60,
         max_health=60,
         attack=10,
+        attack_tick=0,
         defense=5
     }
     return player
@@ -45,6 +46,24 @@ function update_position(_player)
         _player.y += _player.speed
     end
  end
+end
+
+function update_attack(_player)
+    if btnp(❎) then
+        _player.attack_tick = 15 -- Attack duration in ticks
+    end
+    if _player.attack_tick > 0 then
+        _player.attack_tick -= 1
+        -- Check for enemy collisions
+        for enemy in all(enemies) do
+            if abs(_player.x - enemy.x) < 8 and abs(_player.y - enemy.y) < 8 then
+                enemy.health -= _player.attack
+                if enemy.health <= 0 then
+                    del(enemies, enemy)
+                end
+            end
+        end
+    end
 end
 
 function draw_player(_player)
