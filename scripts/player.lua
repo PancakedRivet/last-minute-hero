@@ -14,7 +14,8 @@ function new_player()
         attack_tick_start=10,
         attack_tick_end=5,
         defense=5,
-        score=0
+        score=0,
+        coins=0
     }
     return player
 end
@@ -71,6 +72,7 @@ function update_attack(_player)
                         enemy.attacked = true
                         if enemy.health <= 0 then
                             del(enemies, enemy)
+                            add(coins, {x=enemy.x, y=enemy.y, sp=game_sprites.coin}) -- Spawn a coin where the enemy died
                             _player.score += 1
                         end
                     end
@@ -96,8 +98,7 @@ end
 function draw_status(_player)
  print("Health: ".._player.health.."/".._player.max_health, 1, 12, 8)
  print("Attack: ".._player.attack, 1, 20, 8)
- print("Defense: ".._player.defense, 1, 28, 8)
- print("Score: ".._player.score, 1, 36, 8)
+ --print("Defense: ".._player.defense, 1, 28, 8)
 end
 
 function timer_health_tick(_player, _game_duration_max_secs)

@@ -6,6 +6,7 @@ function _init()
  game_fps = 30
  max_enemies = 5
  enemies = {}
+ coins = {}
 end
 
 function _update()
@@ -45,13 +46,22 @@ function _draw()
     draw_player(player)
     draw_status(player)
     rectfill(0, 0, 128, 9, 6) -- UI Background
-    draw_status_bar(player.health, player.max_health, 9, 2, 116, 3) 
+    draw_status_bar(player.health, player.max_health, 9, 2, 77, 3) 
     -- Health sprite in top left corner
     spr(game_sprites.health, 1, 1)
+    -- Coin UI
+    spr(game_sprites.coin, 90, 1)
+    print(player.coins, 97, 3, 7)
+    -- Score UI
+    spr(game_sprites.score, 108, 1)
+    print(player.score, 116, 3, 7)
     -- Draw enemies
     for enemy in all(enemies) do
         draw_status_bar(enemy.health, enemy.max_health, enemy.x - 3, enemy.y - 5, 11, 1)
         spr(game_sprites.enemy, enemy.x, enemy.y)
+    end
+    for coin in all(coins) do
+        spr(coin.sp, coin.x, coin.y)
     end
  end
 end

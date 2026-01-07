@@ -6,7 +6,9 @@ game_states = {
 
 game_sprites = {
     health = 2,
-    enemy = 17
+    enemy = 17,
+    coin = 3,
+    score = 19
 }
 
 function new_game()
