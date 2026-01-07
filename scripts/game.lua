@@ -62,6 +62,8 @@ function new_enemy()
         health=20,
         max_health=20,
         speed=1,
+        attack=1,
+        attacked=false
     }
     return enemy
 end
