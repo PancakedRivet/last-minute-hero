@@ -15,12 +15,8 @@ function new_game()
 end
 
 function draw_status_bar(_current_value, _max_value, _x, _y, _width, _height)
- local x = _x or 0
- local y = _y or 0
- local bar_width = _width or 40
- local bar_height = _height or 8
  local bar_ratio = _current_value / _max_value
- local filled_width = flr(bar_width * bar_ratio)
+ local filled_width = flr(_width * bar_ratio)
  local border_width = 1
 
  local bar_color = 11 -- Green by default
@@ -31,9 +27,9 @@ function draw_status_bar(_current_value, _max_value, _x, _y, _width, _height)
     bar_color = 8 -- Red
  end
 
- rectfill(x, y, x + bar_width, y + bar_height, 7) -- Background Edge
- rectfill(x + border_width, y + border_width, x + bar_width - border_width, y + bar_height - border_width, 0) -- Background
- rectfill(x + border_width, y + border_width, x + filled_width, y + bar_height - border_width, bar_color) -- Filled part
+ rectfill(_x, _y, _x + _width + (2 * border_width), _y + _height + (2 * border_width), 7) -- Background Edge
+ rectfill(_x + border_width, _y + border_width, _x + _width + border_width, _y + _height + border_width, 0) -- Background
+ rectfill(_x + border_width, _y + border_width, _x + filled_width + border_width, _y + _height + border_width, bar_color) -- Filled part
 end
 
 function update_enemies()
@@ -64,6 +60,7 @@ function new_enemy()
         x=enemy_x,
         y=enemy_y,
         health=20,
+        max_health=20,
         speed=1,
     }
     return enemy

@@ -42,12 +42,13 @@ function _draw()
     map()
     draw_player(player)
     draw_status(player)
-    rectfill(0, 0, 128, 10, 6) -- UI Background
-    draw_status_bar(player.health, player.max_health, 9, 3, 116, 4) 
+    rectfill(0, 0, 128, 9, 6) -- UI Background
+    draw_status_bar(player.health, player.max_health, 9, 2, 116, 3) 
     -- Health sprite in top left corner
     spr(game_sprites.health, 1, 1)
     -- Draw enemies
     for enemy in all(enemies) do
+        draw_status_bar(enemy.health, enemy.max_health, enemy.x - 3, enemy.y - 5, 11, 1)
         spr(game_sprites.enemy, enemy.x, enemy.y)
     end
  end
