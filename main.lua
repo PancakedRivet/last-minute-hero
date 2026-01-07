@@ -18,6 +18,7 @@ function _update()
  if game_state == game_states.playing then
     game_tick += 1
     if game_tick % game_fps == 0 then
+        player.score += 1
         timer_health_tick(player, game_duration_max_secs)
     end
     if player.health <= 0 then

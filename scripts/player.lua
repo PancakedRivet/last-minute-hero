@@ -13,7 +13,8 @@ function new_player()
         attack_tick_max=15,
         attack_tick_start=10,
         attack_tick_end=5,
-        defense=5
+        defense=5,
+        score=0
     }
     return player
 end
@@ -70,6 +71,7 @@ function update_attack(_player)
                         enemy.attacked = true
                         if enemy.health <= 0 then
                             del(enemies, enemy)
+                            _player.score += 1
                         end
                     end
                 end
@@ -95,6 +97,7 @@ function draw_status(_player)
  print("Health: ".._player.health.."/".._player.max_health, 1, 12, 8)
  print("Attack: ".._player.attack, 1, 20, 8)
  print("Defense: ".._player.defense, 1, 28, 8)
+ print("Score: ".._player.score, 1, 36, 8)
 end
 
 function timer_health_tick(_player, _game_duration_max_secs)
