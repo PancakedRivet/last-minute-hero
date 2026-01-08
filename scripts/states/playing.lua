@@ -9,6 +9,7 @@ function update_playing()
         game_state = game_states.game_over
     end
     update_position(player)
+    update_check_coin_collection(player)
     update_enemies()
     update_attack(player)
 end

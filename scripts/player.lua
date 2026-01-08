@@ -102,3 +102,12 @@ function timer_health_tick(_player, _game_duration_max_secs)
         _player.health -= tick_value
     end
 end
+
+function update_check_coin_collection(_player)
+    for coin in all(coins) do
+        if abs(_player.x - coin.x) < 8 and abs(_player.y - coin.y) < 8 then
+            _player.coins += 1
+            del(coins, coin)
+        end
+    end
+end
