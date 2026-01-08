@@ -1,21 +1,21 @@
 function new_player()
     local player = {
-        sp=1,
-        x=64,
-        y=64,
-        sp_flipx=false,
-        sp_flipy=false,
-        speed=2,
-        health=60,
-        max_health=60,
-        attack=10,
-        attack_tick=0,
-        attack_tick_max=15,
-        attack_tick_start=10,
-        attack_tick_end=5,
-        defense=5,
-        score=0,
-        coins=0
+        sp = 1,
+        x = 64,
+        y = 64,
+        sp_flipx = false,
+        sp_flipy = false,
+        speed = 2,
+        health = 60,
+        max_health = 60,
+        attack = 10,
+        attack_tick = 0,
+        attack_tick_max = 15,
+        attack_tick_start = 10,
+        attack_tick_end = 5,
+        defense = 5,
+        score = 0,
+        coins = 0
     }
     return player
 end
@@ -26,31 +26,31 @@ function update_position(_player)
     local min_pos_x = -2
     local min_pos_y = 10
 
- if btn(⬅️) then
-    if _player.x - _player.speed > min_pos_x then
-     _player.x -= _player.speed
+    if btn(⬅️) then
+        if _player.x - _player.speed > min_pos_x then
+            _player.x -= _player.speed
+        end
+        _player.sp_flipx = true
     end
-  _player.sp_flipx = true
- end
- 
- if btn(➡️) then
-    if _player.x + _player.speed < max_pos_x then
-        _player.x += _player.speed
+
+    if btn(➡️) then
+        if _player.x + _player.speed < max_pos_x then
+            _player.x += _player.speed
+        end
+        _player.sp_flipx = false
     end
-  _player.sp_flipx = false
- end
- 
- if btn(⬆️) then
-    if _player.y - _player.speed > min_pos_y then
-        _player.y -= _player.speed
+
+    if btn(⬆️) then
+        if _player.y - _player.speed > min_pos_y then
+            _player.y -= _player.speed
+        end
     end
- end
- 
- if btn(⬇️) then
-    if _player.y + _player.speed < max_pos_y then
-        _player.y += _player.speed
+
+    if btn(⬇️) then
+        if _player.y + _player.speed < max_pos_y then
+            _player.y += _player.speed
+        end
     end
- end
 end
 
 function update_attack(_player)
@@ -72,7 +72,7 @@ function update_attack(_player)
                         enemy.attacked = true
                         if enemy.health <= 0 then
                             del(enemies, enemy)
-                            add(coins, {x=enemy.x, y=enemy.y, sp=game_sprites.coin}) -- Spawn a coin where the enemy died
+                            add(coins, { x = enemy.x, y = enemy.y, sp = game_sprites.coin }) -- Spawn a coin where the enemy died
                             _player.score += 1
                         end
                     end
@@ -92,7 +92,7 @@ function update_attack(_player)
 end
 
 function draw_player(_player)
- spr(_player.sp, _player.x, _player.y, 1, 1, _player.sp_flipx, _player.sp_flipy)
+    spr(_player.sp, _player.x, _player.y, 1, 1, _player.sp_flipx, _player.sp_flipy)
 end
 
 function timer_health_tick(_player, _game_duration_max_secs)

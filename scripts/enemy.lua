@@ -23,13 +23,13 @@ function new_enemy()
     local enemy_x = ceil(rnd() * 120)
     local enemy_y = ceil(rnd() * 110) + 10
     local enemy = {
-        x=enemy_x,
-        y=enemy_y,
-        health=20,
-        max_health=20,
-        speed=1,
-        attack=1,
-        attacked=false
+        x = enemy_x,
+        y = enemy_y,
+        health = 20,
+        max_health = 20,
+        speed = 1,
+        attack = 1,
+        attacked = false
     }
     return enemy
 end
