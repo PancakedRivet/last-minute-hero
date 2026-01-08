@@ -1,15 +1,15 @@
 -- The main UI with health, coins and score
-function draw_ui(_player, _game_sprites)
+function draw_ui(_player)
     -- UI Background
     rectfill(0, 0, 128, 9, 6)
     -- Health Bar UI
     draw_status_bar(_player.health, _player.max_health, 9, 2, 77, 3)
-    spr(_game_sprites.health, 1, 1)
+    spr(game_sprites.health, 1, 1)
     -- Coin UI
-    spr(_game_sprites.coin, 90, 1)
+    spr(game_sprites.coin, 90, 1)
     print(_player.coins, 97, 3, 7)
     -- Score UI
-    spr(_game_sprites.score, 108, 1)
+    spr(game_sprites.score, 108, 1)
     print(_player.score, 116, 3, 7)
 end
 
