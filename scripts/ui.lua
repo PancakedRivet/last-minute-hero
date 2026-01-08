@@ -46,6 +46,10 @@ function draw_shop_health_preview(_player, _restore_amount)
     local restored_filled_width = flr(health_bar_positions.width * restored_bar_ratio)
     local border_width = 1
     local restored_hp_width_offset = 1
+    -- Prevent overflow beyond max health
+    if _player.health >= _player.max_health then
+        restored_hp_width_offset = 0
+    end
     local restored_hp_positions = {
         x0 = health_bar_positions.x + border_width + restored_hp_width_offset + current_filled_width,
         y0 = health_bar_positions.y + border_width,
