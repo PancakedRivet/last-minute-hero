@@ -44,17 +44,7 @@ function _draw()
  if game_state == game_states.playing then
     map()
     draw_player(player)
-    draw_status(player)
-    rectfill(0, 0, 128, 9, 6) -- UI Background
-    draw_status_bar(player.health, player.max_health, 9, 2, 77, 3) 
-    -- Health sprite in top left corner
-    spr(game_sprites.health, 1, 1)
-    -- Coin UI
-    spr(game_sprites.coin, 90, 1)
-    print(player.coins, 97, 3, 7)
-    -- Score UI
-    spr(game_sprites.score, 108, 1)
-    print(player.score, 116, 3, 7)
+    draw_ui()
     -- Draw enemies
     for enemy in all(enemies) do
         draw_status_bar(enemy.health, enemy.max_health, enemy.x - 3, enemy.y - 5, 11, 1)

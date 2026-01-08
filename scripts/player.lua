@@ -95,12 +95,6 @@ function draw_player(_player)
  spr(_player.sp, _player.x, _player.y, 1, 1, _player.sp_flipx, _player.sp_flipy)
 end
 
-function draw_status(_player)
- print("Health: ".._player.health.."/".._player.max_health, 1, 12, 8)
- print("Attack: ".._player.attack, 1, 20, 8)
- --print("Defense: ".._player.defense, 1, 28, 8)
-end
-
 function timer_health_tick(_player, _game_duration_max_secs)
     -- Decrease player health over time
     tick_value = _player.max_health / _game_duration_max_secs

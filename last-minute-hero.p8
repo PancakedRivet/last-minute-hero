@@ -2,9 +2,10 @@ pico-8 cartridge // http://www.pico-8.com
 version 42
 __lua__
 #include main.lua
+#include ./scripts/enemy.lua
 #include ./scripts/game.lua
 #include ./scripts/player.lua
-
+#include ./scripts/ui.lua
 __gfx__
 000000000002209000000000000000006b644446ddd66dddddd66dddbbbb6dddddd6bbbbbbbbbbbbbbbbbbbbbbbbbbbb00000000000000000000000000000000
 00000000000220900880880000aaa00066449466dd6446dddd6006ddbbbb66dd6dd6bbbbbbbbb3bbbbbbbbbbb3bbbbbb00000000000000000000000000000000
