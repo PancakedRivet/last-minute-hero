@@ -1,7 +1,8 @@
 game_states = {
     new_game = 0,
     playing = 1,
-    game_over = 2
+    game_over = 2,
+    shop = 3
 }
 
 game_sprites = {

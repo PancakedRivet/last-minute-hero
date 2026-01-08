@@ -10,6 +10,7 @@ __lua__
 #include ./scripts/states/game_over.lua
 #include ./scripts/states/new_game.lua
 #include ./scripts/states/playing.lua
+#include ./scripts/states/shop.lua
 __gfx__
 000000000002209000000000000000006b644446ddd66dddddd66dddbbbb6dddddd6bbbbbbbbbbbbbbbbbbbbbbbbbbbb00000000000000000000000000000000
 00000000000220900880880000aaa00066449466dd6446dddd6006ddbbbb66dd6dd6bbbbbbbbb3bbbbbbbbbbb3bbbbbb00000000000000000000000000000000

@@ -1,5 +1,10 @@
 function update_playing()
     -- Update logic here
+    if btnp(🅾️) then
+        game_state = game_states.shop
+        shop_selected_index = 1
+        return
+    end
     game_tick += 1
     if game_tick % game_fps == 0 then
         player.score += 1

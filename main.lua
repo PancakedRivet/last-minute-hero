@@ -7,6 +7,11 @@ function _init()
     max_enemies = 5
     enemies = {}
     coins = {}
+    shop_items = {
+        {name="Health", cost=10},
+        {name="Attack", cost=10}
+    }
+    shop_selected_index = 1
 end
 
 -- Core update logic here
@@ -19,6 +24,9 @@ function _update()
     end
     if game_state == game_states.playing then
         update_playing()
+    end
+    if game_state == game_states.shop then
+        update_shop()
     end
 end
 
@@ -33,5 +41,8 @@ function _draw()
     end
     if game_state == game_states.playing then
         draw_playing()
+    end
+    if game_state == game_states.shop then
+        draw_shop()
     end
 end
