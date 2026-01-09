@@ -1,7 +1,11 @@
 ui_pos = {
     background = { x0 = 0, y0 = 0, x1 = 128, y1 = 9 },
-    hp_bar_border = { x0 = 8, y0 = 1, x1 = 86, y1 = 5 },
-    hp_bar_background = { x0 = 9, y0 = 2, x1 = 85, y1 = 4 }
+    hp_icon = { x = 1, y = 1 },
+    hp_bar = { x0 = 9, y0 = 2, x1 = 85, y1 = 4 },
+    coin_icon = { x = 90, y = 1 },
+    coin_text = { x = 97, y = 3 },
+    score_icon = { x = 108, y = 1 },
+    score_text = { x = 116, y = 3 }
 }
 
 hp_bar_border_width = 1
@@ -12,13 +16,13 @@ function draw_ui(_player)
     rectfill(ui_pos.background.x0, ui_pos.background.y0, ui_pos.background.x1, ui_pos.background.y1, 6)
     -- Health Bar UI
     draw_status_bar(_player.health, _player.max_health, 9, 2, 77, 3)
-    spr(game_sprites.health, 1, 1)
+    spr(game_sprites.health, ui_pos.hp_icon.x, ui_pos.hp_icon.y)
     -- Coin UI
-    spr(game_sprites.coin, 90, 1)
-    print(_player.coins, 97, 3, 7)
+    spr(game_sprites.coin, ui_pos.coin_icon.x, ui_pos.coin_icon.y)
+    print(_player.coins, ui_pos.coin_text.x, ui_pos.coin_text.y, 7)
     -- Score UI
-    spr(game_sprites.score, 108, 1)
-    print(_player.score, 116, 3, 7)
+    spr(game_sprites.score, ui_pos.score_icon.x, ui_pos.score_icon.y)
+    print(_player.score, ui_pos.score_text.x, ui_pos.score_text.y, 7)
 end
 
 function draw_status_bar(_current_value, _max_value, _x, _y, _width, _height)
