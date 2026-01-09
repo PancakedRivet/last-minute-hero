@@ -37,7 +37,7 @@ end
 -- Draw enemies
 function draw_enemies(_enemies)
     for enemy in all(_enemies) do
-        draw_status_bar(enemy.health, enemy.max_health, enemy.x - 3, enemy.y - 5, 11, 1)
+        draw_status_bar(enemy.health, enemy.max_health, enemy.x - 3, enemy.y - 5, enemy.x + 8, enemy.y - 4)
         spr(game_sprites.enemy, enemy.x, enemy.y)
     end
 end
