@@ -12,8 +12,8 @@ function _init()
         attack_item_name = "Attack"
     }
     shop_items = {
-        {name=shop_item_names.health_item_name, cost=10, health_restore=5},
-        {name=shop_item_names.attack_item_name, cost=10}
+        {name=shop_item_names.health_item_name, cost=10, sprite=game_sprites.health, health_restore=5},
+        {name=shop_item_names.attack_item_name, cost=10, sprite=game_sprites.attack}
     }
     shop_selected_index = 1
 end
