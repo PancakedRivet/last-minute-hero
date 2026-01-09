@@ -1,7 +1,7 @@
 ui_pos = {
     background = { x0 = 0, y0 = 0, x1 = 128, y1 = 9 },
     hp_icon = { x = 1, y = 1 },
-    hp_bar = { x0 = 9, y0 = 2, x1 = 85, y1 = 4 },
+    hp_bar = { x0 = 9, y0 = 2, x1 = 86, y1 = 5 },
     coin_icon = { x = 90, y = 1 },
     coin_text = { x = 97, y = 3 },
     score_icon = { x = 108, y = 1 },
@@ -10,13 +10,23 @@ ui_pos = {
 
 hp_bar_border_width = 1
 
+local function get_bar_width(_current, _max, _width)
+    return flr(_width * (_current / _max))
+end
+
 -- The main UI with health, coins and score
 function draw_ui(_player)
     -- UI Background
     rectfill(ui_pos.background.x0, ui_pos.background.y0, ui_pos.background.x1, ui_pos.background.y1, 6)
     -- Health Bar UI
-    draw_status_bar(_player.health, _player.max_health, ui_pos.hp_bar.x0, ui_pos.hp_bar.y0, ui_pos.hp_bar.x1 + 1, ui_pos.hp_bar.y1 + 1)
+    draw_status_bar(_player.health, _player.max_health, ui_pos.hp_bar.x0, ui_pos.hp_bar.y0, ui_pos.hp_bar.x1, ui_pos.hp_bar.y1)
     spr(game_sprites.health, ui_pos.hp_icon.x, ui_pos.hp_icon.y)
+    print(
+        _player.health .. "/" .. _player.max_health,
+        ui_pos.hp_bar.x0 + ((ui_pos.hp_bar.x1 - ui_pos.hp_bar.x0) / 2) - (6 * #tostr(_player.max_health) / 2),
+        ui_pos.hp_bar.y0,
+        7
+    )
     -- Coin UI
     spr(game_sprites.coin, ui_pos.coin_icon.x, ui_pos.coin_icon.y)
     print(_player.coins, ui_pos.coin_text.x, ui_pos.coin_text.y, 7)
@@ -29,7 +39,7 @@ function draw_status_bar(_current_value, _max_value, _x0, _y0, _x1, _y1)
     local _width = _x1 - _x0
     local _height = _y1 - _y0
     local bar_ratio = _current_value / _max_value
-    local filled_width = flr(_width * bar_ratio)
+    local filled_width = get_bar_width(_current_value, _max_value, _width)
 
     -- Green by default
     local bar_color = 11
@@ -41,23 +51,41 @@ function draw_status_bar(_current_value, _max_value, _x0, _y0, _x1, _y1)
     end
 
     -- Background Edge
-    rectfill(_x0, _y0, _x0 + _width + (2 * hp_bar_border_width), _y0 + _height + (2 * hp_bar_border_width), 7)
+    rectfill(
+        _x0,
+        _y0,
+        _x0 + _width + (2 * hp_bar_border_width),
+        _y0 + _height + (2 * hp_bar_border_width),
+        7
+    )
     -- Background
-    rectfill(_x0 + hp_bar_border_width, _y0 + hp_bar_border_width, _x0 + _width + hp_bar_border_width, _y0 + _height + hp_bar_border_width, 0)
+    rectfill(
+        _x0 + hp_bar_border_width,
+        _y0 + hp_bar_border_width,
+        _x0 + hp_bar_border_width + _width,
+        _y0 + hp_bar_border_width + _height,
+        0
+    )
     -- Filled part
-    rectfill(_x0 + hp_bar_border_width, _y0 + hp_bar_border_width, _x0 + filled_width + hp_bar_border_width, _y0 + _height + hp_bar_border_width, bar_color)
+    rectfill(
+        _x0 + hp_bar_border_width,
+        _y0 + hp_bar_border_width,
+        _x0 + hp_bar_border_width + filled_width,
+        _y0 + hp_bar_border_width + _height,
+        bar_color
+    )
 end
 
 -- If the player is hovering over the health item in the shop,
 -- show the amount of health that would be restored on the health bar
 function draw_shop_health_preview(_player, _restore_amount)
     local width = ui_pos.hp_bar.x1 - ui_pos.hp_bar.x0
-    local current_bar_ratio = _player.health / _player.max_health
-    local restored_bar_ratio = _restore_amount / _player.max_health
-    local current_filled_width = flr(width * current_bar_ratio)
-    local restored_filled_width = flr(width * restored_bar_ratio)
+
+    local current_filled_width = get_bar_width(_player.health, _player.max_health, width)
+    local restored_filled_width = get_bar_width(_restore_amount, _player.max_health, width)
+
     -- We need an offset to avoid drawing over the end of the current health bar
-    local restored_hp_width_offset = 2
+    local restored_hp_width_offset = 1
     -- If the player's health is full, let the restored health overwrite the end of the health bar
     if _player.health >= _player.max_health then
         restored_hp_width_offset = 0
