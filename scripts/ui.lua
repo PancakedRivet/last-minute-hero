@@ -1,7 +1,15 @@
+ui_pos = {
+    background = { x0 = 0, y0 = 0, x1 = 128, y1 = 9 },
+    hp_bar_border = { x0 = 8, y0 = 1, x1 = 86, y1 = 5 },
+    hp_bar_background = { x0 = 9, y0 = 2, x1 = 85, y1 = 4 }
+}
+
+hp_bar_border_width = 1
+
 -- The main UI with health, coins and score
 function draw_ui(_player)
     -- UI Background
-    rectfill(0, 0, 128, 9, 6)
+    rectfill(ui_pos.background.x0, ui_pos.background.y0, ui_pos.background.x1, ui_pos.background.y1, 6)
     -- Health Bar UI
     draw_status_bar(_player.health, _player.max_health, 9, 2, 77, 3)
     spr(game_sprites.health, 1, 1)
@@ -16,7 +24,7 @@ end
 function draw_status_bar(_current_value, _max_value, _x, _y, _width, _height)
     local bar_ratio = _current_value / _max_value
     local filled_width = flr(_width * bar_ratio)
-    local border_width = 1
+    local border_width = hp_bar_border_width
 
     -- Green by default
     local bar_color = 11
@@ -44,7 +52,7 @@ function draw_shop_health_preview(_player, _restore_amount)
     local restored_bar_ratio = _restore_amount / _player.max_health
     local current_filled_width = flr(health_bar_positions.width * current_bar_ratio)
     local restored_filled_width = flr(health_bar_positions.width * restored_bar_ratio)
-    local border_width = 1
+    local border_width = hp_bar_border_width
     local restored_hp_width_offset = 1
     -- Prevent overflow beyond max health
     if _player.health >= _player.max_health then
