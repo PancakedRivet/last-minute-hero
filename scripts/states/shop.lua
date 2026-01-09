@@ -45,7 +45,7 @@ function draw_shop()
         print(">", 10, 70 + (10 * exit_index + 10), 8)
     end
 
-    if shop_selected_index <= #shop_items and shop_items[shop_selected_index].name == "Health" then
-        draw_shop_health_preview(player, 5)
+    if shop_selected_index <= #shop_items and shop_items[shop_selected_index].name == shop_item_names.health_item_name then
+        draw_shop_health_preview(player, shop_items[shop_selected_index].health_restore)
     end
 end

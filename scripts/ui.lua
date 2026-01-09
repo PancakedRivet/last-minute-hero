@@ -14,6 +14,26 @@ local function get_bar_width(_current, _max, _width)
     return flr(_width * (_current / _max))
 end
 
+local function get_bar_colour(_current, _max)
+    local ratio = _current / _max
+    if ratio < 0.2 then
+        return 8 -- Red
+    elseif ratio < 0.5 then
+        return 10 -- Yellow
+    else
+        return 11 -- Green
+    end
+end
+
+local function draw_hp_text(_current_hp, _max_hp)
+    print(
+        _current_hp .. "/" .. _max_hp,
+        ui_pos.hp_bar.x0 + ((ui_pos.hp_bar.x1 - ui_pos.hp_bar.x0) / 2) - (6 * #tostr(_max_hp) / 2),
+        ui_pos.hp_bar.y0,
+        7
+    )
+end
+
 -- The main UI with health, coins and score
 function draw_ui(_player)
     -- UI Background
@@ -21,12 +41,12 @@ function draw_ui(_player)
     -- Health Bar UI
     draw_status_bar(_player.health, _player.max_health, ui_pos.hp_bar.x0, ui_pos.hp_bar.y0, ui_pos.hp_bar.x1, ui_pos.hp_bar.y1)
     spr(game_sprites.health, ui_pos.hp_icon.x, ui_pos.hp_icon.y)
-    print(
-        _player.health .. "/" .. _player.max_health,
-        ui_pos.hp_bar.x0 + ((ui_pos.hp_bar.x1 - ui_pos.hp_bar.x0) / 2) - (6 * #tostr(_player.max_health) / 2),
-        ui_pos.hp_bar.y0,
-        7
-    )
+
+    -- In the shop, the health text is drawn separately to allow for the health preview overlay to be drawn over the bar correctly
+    if not (game_state == game_states.shop and shop_selected_index <= #shop_items and shop_items[shop_selected_index].name == shop_item_names.health_item_name) then
+        draw_hp_text(_player.health, _player.max_health)
+    end
+
     -- Coin UI
     spr(game_sprites.coin, ui_pos.coin_icon.x, ui_pos.coin_icon.y)
     print(_player.coins, ui_pos.coin_text.x, ui_pos.coin_text.y, 7)
@@ -38,17 +58,8 @@ end
 function draw_status_bar(_current_value, _max_value, _x0, _y0, _x1, _y1)
     local _width = _x1 - _x0
     local _height = _y1 - _y0
-    local bar_ratio = _current_value / _max_value
     local filled_width = get_bar_width(_current_value, _max_value, _width)
-
-    -- Green by default
-    local bar_color = 11
-    if bar_ratio < 0.5 then
-        bar_color = 10 -- Yellow
-    end
-    if bar_ratio < 0.2 then
-        bar_color = 8 -- Red
-    end
+    local bar_color = get_bar_colour(_current_value, _max_value)
 
     -- Background Edge
     rectfill(
@@ -104,5 +115,9 @@ function draw_shop_health_preview(_player, _restore_amount)
         restored_hp_positions.x1,
         restored_hp_positions.y1,
         14
+    )
+    draw_hp_text(
+        min(_player.health + _restore_amount, _player.max_health),
+        _player.max_health
     )
 end
