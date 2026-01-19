@@ -44,15 +44,18 @@ function update_shop()
 end
 
 function draw_shop()
-    draw_ui(player)
-    print("Welcome to the Shop!", 30, 60, 7)
     local index = 1
     local _display_x_start = 20
-    local _display_y_start = 70
+    local _display_y_start = 20
     local _sprite_y_offset = -2
     local _cursor_x = 10
     local line_height = 10
     local exit_index = get_shop_exit_index()
+    
+    draw_ui(player)
+    print("Welcome to the Shop!", _display_x_start, _display_y_start, colours.white)
+    -- Add some space before listing items
+    _display_y_start += line_height * 2
     for item in all(shop_items) do
         print(item.name .. " - " .. item.cost .. " coins", _display_x_start, _display_y_start + (line_height * index), colours.light_grey)
         --TODO Use a coin sprite instead of text
