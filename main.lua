@@ -13,9 +13,9 @@ function _init()
         money_item_name = "Coins per enemy"
     }
     shop_items = {
-        {name=shop_item_names.health_item_name, cost=10, sprite=game_sprites.health, health_restore=5},
-        {name=shop_item_names.score_item_name, cost=20, sprite=game_sprites.score, score_increase=100},
-        {name=shop_item_names.money_item_name, cost=50, sprite=game_sprites.coin, coins_increase=5}
+        {name=shop_item_names.health_item_name, cost=10, sprite=game_sprites.health, health_restore=5, func=get_shop_item_values_health},
+        {name=shop_item_names.score_item_name, cost=20, sprite=game_sprites.score, score_increase=100, func=function() return player.score, player.score + 100 end},
+        {name=shop_item_names.money_item_name, cost=50, sprite=game_sprites.coin, coins_increase=5, func=function() return player.coins, player.coins + 5 end}
     }
     shop_selected_index = 1
 end
