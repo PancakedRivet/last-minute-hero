@@ -1,10 +1,10 @@
 ui_pos = {
     background = { x0 = 0, y0 = 0, x1 = 128, y1 = 9 },
-    hp_icon = { x = 1, y = 1 },
+    hp_icon = { x = 1, y = 2 },
     hp_bar = { x0 = 9, y0 = 2, x1 = 86, y1 = 5 },
-    coin_icon = { x = 90, y = 1 },
+    coin_icon = { x = 90, y = 2 },
     coin_text = { x = 97, y = 3 },
-    score_icon = { x = 108, y = 1 },
+    score_icon = { x = 108, y = 2 },
     score_text = { x = 116, y = 3 }
 }
 
