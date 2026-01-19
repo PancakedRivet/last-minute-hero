@@ -45,9 +45,10 @@ end
 
 function draw_shop()
     local index = 1
-    local _display_x_start = 20
+    local _display_x_start = 15
     local _display_y_start = 20
-    local _sprite_y_offset = -2
+    local _sprite_y_offset = -1
+    local _sprite_x_offset = 10
     local _cursor_x = 10
     local line_height = 10
     local exit_index = get_shop_exit_index()
@@ -57,10 +58,10 @@ function draw_shop()
     -- Add some space before listing items
     _display_y_start += line_height * 2
     for item in all(shop_items) do
-        print(item.name .. " - " .. item.cost .. " coins", _display_x_start, _display_y_start + (line_height * index), colours.light_grey)
+        print(item.name .. " - " .. item.cost .. " coins", _display_x_start + _sprite_x_offset, _display_y_start + (line_height * index), colours.light_grey)
         --TODO Use a coin sprite instead of text
-        -- print("=" .. item.cost .. " coins", _display_x_start, _display_y_start + (line_height * index), 6)
-        --spr(item.sprite, _display_x_start, _display_y_start + (line_height * index) + _sprite_y_offset)
+        -- print("=" .. item.cost .. " coins", _display_x_start, _display_y_start + (line_height * index), colours.light_grey)
+        spr(item.sprite, _display_x_start, _display_y_start + (line_height * index) + _sprite_y_offset)
         if index == shop_selected_index then
             print(">", _cursor_x, _display_y_start + (line_height * index), colours.red)
         end
