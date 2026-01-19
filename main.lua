@@ -9,11 +9,13 @@ function _init()
     coins = {}
     shop_item_names = {
         health_item_name = "Health",
-        attack_item_name = "Attack"
+        score_item_name = "Score per enemy",
+        money_item_name = "Coins per enemy"
     }
     shop_items = {
         {name=shop_item_names.health_item_name, cost=10, sprite=game_sprites.health, health_restore=5},
-        {name=shop_item_names.attack_item_name, cost=10, sprite=game_sprites.attack}
+        {name=shop_item_names.score_item_name, cost=20, sprite=game_sprites.score, score_increase=100},
+        {name=shop_item_names.money_item_name, cost=50, sprite=game_sprites.coin, coins_increase=5}
     }
     shop_selected_index = 1
 end

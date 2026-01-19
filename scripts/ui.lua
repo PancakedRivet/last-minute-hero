@@ -17,11 +17,11 @@ end
 local function get_bar_colour(_current, _max)
     local ratio = _current / _max
     if ratio < 0.2 then
-        return 8 -- Red
+        return colours.red
     elseif ratio < 0.5 then
-        return 10 -- Yellow
+        return colours.yellow
     else
-        return 11 -- Green
+        return colours.green
     end
 end
 
@@ -30,14 +30,14 @@ local function draw_hp_text(_current_hp, _max_hp)
         _current_hp .. "/" .. _max_hp,
         ui_pos.hp_bar.x0 + ((ui_pos.hp_bar.x1 - ui_pos.hp_bar.x0) / 2) - (6 * #tostr(_max_hp) / 2),
         ui_pos.hp_bar.y0,
-        7
+        colours.white
     )
 end
 
 -- The main UI with health, coins and score
 function draw_ui(_player)
     -- UI Background
-    rectfill(ui_pos.background.x0, ui_pos.background.y0, ui_pos.background.x1, ui_pos.background.y1, 6)
+    rectfill(ui_pos.background.x0, ui_pos.background.y0, ui_pos.background.x1, ui_pos.background.y1, colours.light_grey)
     -- Health Bar UI
     draw_status_bar(_player.health, _player.max_health, ui_pos.hp_bar.x0, ui_pos.hp_bar.y0, ui_pos.hp_bar.x1, ui_pos.hp_bar.y1)
     spr(game_sprites.health, ui_pos.hp_icon.x, ui_pos.hp_icon.y)
@@ -49,10 +49,10 @@ function draw_ui(_player)
 
     -- Coin UI
     spr(game_sprites.coin, ui_pos.coin_icon.x, ui_pos.coin_icon.y)
-    print(_player.coins, ui_pos.coin_text.x, ui_pos.coin_text.y, 7)
+    print(_player.coins, ui_pos.coin_text.x, ui_pos.coin_text.y, colours.white)
     -- Score UI
     spr(game_sprites.score, ui_pos.score_icon.x, ui_pos.score_icon.y)
-    print(_player.score, ui_pos.score_text.x, ui_pos.score_text.y, 7)
+    print(_player.score, ui_pos.score_text.x, ui_pos.score_text.y, colours.white)
 end
 
 function draw_status_bar(_current_value, _max_value, _x0, _y0, _x1, _y1)
@@ -67,7 +67,7 @@ function draw_status_bar(_current_value, _max_value, _x0, _y0, _x1, _y1)
         _y0,
         _x0 + _width + (2 * hp_bar_border_width),
         _y0 + _height + (2 * hp_bar_border_width),
-        7
+        colours.white
     )
     -- Background
     rectfill(
@@ -75,7 +75,7 @@ function draw_status_bar(_current_value, _max_value, _x0, _y0, _x1, _y1)
         _y0 + hp_bar_border_width,
         _x0 + hp_bar_border_width + _width,
         _y0 + hp_bar_border_width + _height,
-        0
+        colours.black
     )
     -- Filled part
     rectfill(

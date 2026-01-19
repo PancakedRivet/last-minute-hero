@@ -25,6 +25,22 @@ function update_shop()
     if btnp(🅾️) and shop_selected_index == get_shop_exit_index() then
         game_state = game_states.playing
     end
+
+    -- TODO implement shop item effects
+    -- Player selects a shop item
+    if btnp(🅾️) and shop_selected_index <= #shop_items then
+        local selected_item = shop_items[shop_selected_index]
+        if player.coins >= selected_item.cost then
+            player.coins -= selected_item.cost
+            if selected_item.name == shop_item_names.health_item_name then
+                player.health = min(player.health + selected_item.health_restore, player.max_health)
+            elseif selected_item.name == shop_item_names.score_item_name then
+                player.score += selected_item.score_increase
+            elseif selected_item.name == shop_item_names.money_item_name then
+                player.coins += selected_item.coins_increase
+            end
+        end
+    end
 end
 
 function draw_shop()
@@ -38,19 +54,19 @@ function draw_shop()
     local line_height = 10
     local exit_index = get_shop_exit_index()
     for item in all(shop_items) do
-        print(item.name .. " - " .. item.cost .. " coins", _display_x_start, _display_y_start + (line_height * index), 6)
+        print(item.name .. " - " .. item.cost .. " coins", _display_x_start, _display_y_start + (line_height * index), colours.light_grey)
         --TODO Use a coin sprite instead of text
-        --print("=" .. item.cost .. " coins", _display_x_start, _display_y_start + (line_height * index), 6)
+        -- print("=" .. item.cost .. " coins", _display_x_start, _display_y_start + (line_height * index), 6)
         --spr(item.sprite, _display_x_start, _display_y_start + (line_height * index) + _sprite_y_offset)
         if index == shop_selected_index then
-            print(">", _cursor_x, _display_y_start + (line_height * index), 8)
+            print(">", _cursor_x, _display_y_start + (line_height * index), colours.red)
         end
         index += 1
     end
     -- Exit option with an empty line to separate it from the items
-    print("Exit Shop", _display_x_start, _display_y_start + (line_height * exit_index + line_height), 6)
+    print("Exit Shop", _display_x_start, _display_y_start + (line_height * exit_index + line_height), colours.light_grey)
     if exit_index == shop_selected_index then
-        print(">", _cursor_x, _display_y_start + (line_height * exit_index + line_height), 8)
+        print(">", _cursor_x, _display_y_start + (line_height * exit_index + line_height), colours.red)
     end
 
     if shop_selected_index <= #shop_items and shop_items[shop_selected_index].name == shop_item_names.health_item_name then

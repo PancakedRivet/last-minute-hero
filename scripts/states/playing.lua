@@ -25,7 +25,5 @@ function draw_playing()
     draw_player(player)
     draw_ui(player)
     draw_enemies(enemies)
-    for coin in all(coins) do
-        spr(coin.sp, coin.x, coin.y)
-    end
+    draw_coins()
 end
