@@ -2,16 +2,23 @@ local function get_shop_exit_index()
     return #shop_items + 1
 end
 
+local function can_purchase_item(item)
+    return player.coins >= item.cost
+end
+
 function update_shop()
     -- Shop update logic here
     if btnp(❎) then
         game_state = game_states.playing
+        return
     end
+
     if btnp(⬆️) then
         shop_selected_index -= 1
         if shop_selected_index < 1 then
             shop_selected_index = get_shop_exit_index()
         end
+        return
     end
 
     if btnp(⬇️) then
@@ -19,27 +26,23 @@ function update_shop()
         if shop_selected_index > get_shop_exit_index() then
             shop_selected_index = 1
         end
+        return
+    end
+
+    -- Player selects a shop item
+    if btnp(🅾️) and shop_selected_index <= #shop_items then
+        local selected_item = shop_items[shop_selected_index]
+        if can_purchase_item(selected_item) then
+            player.coins -= selected_item.cost
+            selected_item.purchase_func()
+        end
+        return
     end
 
     -- Player selects the exit option
     if btnp(🅾️) and shop_selected_index == get_shop_exit_index() then
         game_state = game_states.playing
-    end
-
-    -- TODO implement shop item effects
-    -- Player selects a shop item
-    if btnp(🅾️) and shop_selected_index <= #shop_items then
-        local selected_item = shop_items[shop_selected_index]
-        if player.coins >= selected_item.cost then
-            player.coins -= selected_item.cost
-            if selected_item.name == shop_item_names.health_item_name then
-                player.health = min(player.health + selected_item.health_restore, player.max_health)
-            elseif selected_item.name == shop_item_names.score_item_name then
-                player.score += selected_item.score_increase
-            elseif selected_item.name == shop_item_names.money_item_name then
-                player.coins += selected_item.coins_increase
-            end
-        end
+        return
     end
 end
 
@@ -59,7 +62,7 @@ function draw_shop()
     -- Add some space before listing items
     _display_y_start += line_height * 2
     for item in all(shop_items) do
-        local _current_value, _proposed_value = item.func()
+        local _current_value, _proposed_value = item.display_func()
         spr(game_sprites.coin, _display_x_start, _display_y_start + (line_height * index) + _sprite_y_offset)
         -- TODO Break this into seperate print statements
         -- The cost of the item and it's name with space for the sprite in between
