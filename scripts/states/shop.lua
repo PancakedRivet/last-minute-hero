@@ -2,14 +2,6 @@ local function get_shop_exit_index()
     return #shop_items + 1
 end
 
--- TODO shouldn't be indexing using hardcoded 1
--- Function to retrieve the current and proposed values for the health item
-function get_shop_item_values_health()
-    local current_health = player.health
-    local proposed_health = min(player.health + shop_items[1].health_restore, player.max_health)
-    return current_health, proposed_health
-end
-
 function update_shop()
     -- Shop update logic here
     if btnp(❎) then
@@ -71,7 +63,7 @@ function draw_shop()
         spr(game_sprites.coin, _display_x_start, _display_y_start + (line_height * index) + _sprite_y_offset)
         -- TODO Break this into seperate print statements
         -- The cost of the item and it's name with space for the sprite in between
-        print("x" .. item.cost .. " -   " .. item.name .. " (" .. _current_value .. " -> " .. _proposed_value .. ")", _display_x_start + _sprite_x_offset, _display_y_start + (line_height * index), colours.light_grey)
+        print("x" .. item.cost .. " -   " .. item.name .. " (" .. _current_value .. ">" .. _proposed_value .. ")", _display_x_start + _sprite_x_offset, _display_y_start + (line_height * index), colours.light_grey)
         spr(item.sprite, _display_x_start + _shop_cost_x_offset, _display_y_start + (line_height * index) + _sprite_y_offset)
         if index == shop_selected_index then
             print(">", _cursor_x, _display_y_start + (line_height * index), colours.red)
@@ -85,6 +77,6 @@ function draw_shop()
     end
 
     if shop_selected_index <= #shop_items and shop_items[shop_selected_index].name == shop_item_names.health_item_name then
-        draw_shop_health_preview(player, shop_items[shop_selected_index].health_restore)
+        draw_shop_health_preview(player, 5)
     end
 end

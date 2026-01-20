@@ -15,7 +15,9 @@ function new_player()
         attack_tick_end = 5,
         defense = 5,
         score = 0,
-        coins = 0
+        score_value = 1,
+        coins = 0,
+        coin_value = 1,
     }
     return player
 end
@@ -73,7 +75,7 @@ function update_attack(_player)
                         if enemy.health <= 0 then
                             del(enemies, enemy)
                             add(coins, { x = enemy.x, y = enemy.y, sp = game_sprites.coin }) -- Spawn a coin where the enemy died
-                            _player.score += 1
+                            _player.score += _player.score_value
                         end
                     end
                 end
@@ -106,7 +108,7 @@ end
 function update_check_coin_collection(_player)
     for coin in all(coins) do
         if abs(_player.x - coin.x) < 8 and abs(_player.y - coin.y) < 8 then
-            _player.coins += 1
+            _player.coins += _player.coin_value
             del(coins, coin)
         end
     end
