@@ -12,10 +12,13 @@ function _init()
         score_item_name = "score/enemy",
         money_item_name = "coins/enemy"
     }
+    item_health_restore = 5
+    item_score_increase = 1
+    item_coin_increase = 1
     shop_items = {
-        {name=shop_item_names.health_item_name, cost=10, sprite=game_sprites.health, func=function() return player.health, min(player.health + 5, player.max_health) end},
-        {name=shop_item_names.score_item_name, cost=20, sprite=game_sprites.score, func=function() return player.score_value, player.score_value + 1 end},
-        {name=shop_item_names.money_item_name, cost=50, sprite=game_sprites.coin, func=function() return player.coin_value, player.coin_value + 1 end}
+        {name=shop_item_names.health_item_name, cost=10, sprite=game_sprites.health, func=function() return player.health, min(player.health + item_health_restore, player.max_health) end},
+        {name=shop_item_names.score_item_name, cost=20, sprite=game_sprites.score, func=function() return player.score_value, player.score_value + item_score_increase end},
+        {name=shop_item_names.money_item_name, cost=50, sprite=game_sprites.coin, func=function() return player.coin_value, player.coin_value + item_coin_increase end}
     }
     shop_selected_index = 1
 end
