@@ -1,3 +1,6 @@
+player_animation_sprites_walk = {48, 49, 50, 51}
+player_animation_frames_per_sprite = 6
+
 function new_player()
     local player = {
         sp = 48,
@@ -6,10 +9,7 @@ function new_player()
         sp_flipx = false,
         sp_flipy = false,
         animation_idx = 1,
-        animation_sprites_walk = {48, 49, 50, 51},
-        animation_frames_per_sprite = 6,
         animation_tick = 0,
-        animation_sprite_rest = 48,
         speed = 2,
         health = 60,
         max_health = 60,
@@ -65,20 +65,9 @@ function update_position(_player)
     end
 
     if _update_animation_walk then
-        update_animation_walk(_player)
+        update_animation_walk(_player, #player_animation_sprites_walk, player_animation_frames_per_sprite)
     else
         _player.animation_idx = 1
-    end
-end
-
-function update_animation_walk(_player)
-    _player.animation_tick += 1
-    if _player.animation_tick >= _player.animation_frames_per_sprite then
-        _player.animation_tick = 0
-        _player.animation_idx += 1
-        if _player.animation_idx > #_player.animation_sprites_walk then
-            _player.animation_idx = 1
-        end
     end
 end
 
@@ -121,7 +110,7 @@ function update_attack(_player)
 end
 
 function draw_player(_player)
-    spr(_player.animation_sprites_walk[_player.animation_idx], _player.x, _player.y, 1, 1, _player.sp_flipx, _player.sp_flipy)
+    spr(player_animation_sprites_walk[_player.animation_idx], _player.x, _player.y, 1, 1, _player.sp_flipx, _player.sp_flipy)
 end
 
 function timer_health_tick(_player, _game_duration_max_secs)

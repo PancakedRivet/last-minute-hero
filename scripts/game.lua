@@ -7,7 +7,6 @@ game_states = {
 
 game_sprites = {
     health = 2,
-    enemy = 17,
     coin = 3,
     score = 19
 }
@@ -39,5 +38,17 @@ end
 function draw_coins()
     for coin in all(coins) do
         spr(coin.sp, coin.x, coin.y)
+    end
+end
+
+-- Update walk animation for a character like the hero or enemy
+function update_animation_walk(_character, _animation_sprite_count, _animation_frames_per_sprite)
+    _character.animation_tick += 1
+    if _character.animation_tick >= _animation_frames_per_sprite then
+        _character.animation_tick = 0
+        _character.animation_idx += 1
+        if _character.animation_idx > _animation_sprite_count then
+            _character.animation_idx = 1
+        end
     end
 end

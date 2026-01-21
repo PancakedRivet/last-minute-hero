@@ -1,3 +1,6 @@
+enemy_animation_sprites_walk = {32,33,34,35}
+enemy_animation_frames_per_sprite = 8
+
 function update_enemies()
     -- Placeholder for enemy update logic
     if count(enemies) < max_enemies then
@@ -16,6 +19,8 @@ function update_enemies()
         elseif enemy.y > player.y then
             enemy.y -= enemy.speed
         end
+        -- Update enemy animations
+        update_animation_walk(enemy, #enemy_animation_sprites_walk, enemy_animation_frames_per_sprite)
     end
 end
 
@@ -29,7 +34,9 @@ function new_enemy()
         max_health = 20,
         speed = 1,
         attack = 1,
-        attacked = false
+        attacked = false,
+        animation_idx = 1,
+        animation_tick = 0
     }
     return enemy
 end
@@ -38,6 +45,6 @@ end
 function draw_enemies(_enemies)
     for enemy in all(_enemies) do
         draw_status_bar(enemy.health, enemy.max_health, enemy.x - 3, enemy.y - 5, enemy.x + 8, enemy.y - 4)
-        spr(game_sprites.enemy, enemy.x, enemy.y)
+        spr(enemy_animation_sprites_walk[enemy.animation_idx], enemy.x, enemy.y)
     end
 end
