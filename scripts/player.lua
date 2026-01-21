@@ -1,10 +1,15 @@
 function new_player()
     local player = {
-        sp = 1,
+        sp = 48,
         x = 64,
         y = 64,
         sp_flipx = false,
         sp_flipy = false,
+        animation_idx = 1,
+        animation_sprites_walk = {48, 49, 50, 51},
+        animation_frames_per_sprite = 6,
+        animation_tick = 0,
+        animation_sprite_rest = 48,
         speed = 2,
         health = 60,
         max_health = 60,
@@ -27,10 +32,12 @@ function update_position(_player)
     local max_pos_y = 120
     local min_pos_x = -2
     local min_pos_y = 10
+    local _update_animation_walk = false
 
     if btn(⬅️) then
         if _player.x - _player.speed > min_pos_x then
             _player.x -= _player.speed
+            _update_animation_walk = true
         end
         _player.sp_flipx = true
     end
@@ -38,6 +45,7 @@ function update_position(_player)
     if btn(➡️) then
         if _player.x + _player.speed < max_pos_x then
             _player.x += _player.speed
+            _update_animation_walk = true
         end
         _player.sp_flipx = false
     end
@@ -45,12 +53,31 @@ function update_position(_player)
     if btn(⬆️) then
         if _player.y - _player.speed > min_pos_y then
             _player.y -= _player.speed
+            _update_animation_walk = true
         end
     end
 
     if btn(⬇️) then
         if _player.y + _player.speed < max_pos_y then
             _player.y += _player.speed
+            _update_animation_walk = true
+        end
+    end
+
+    if _update_animation_walk then
+        update_animation_walk(_player)
+    else
+        _player.animation_idx = 1
+    end
+end
+
+function update_animation_walk(_player)
+    _player.animation_tick += 1
+    if _player.animation_tick >= _player.animation_frames_per_sprite then
+        _player.animation_tick = 0
+        _player.animation_idx += 1
+        if _player.animation_idx > #_player.animation_sprites_walk then
+            _player.animation_idx = 1
         end
     end
 end
@@ -94,7 +121,7 @@ function update_attack(_player)
 end
 
 function draw_player(_player)
-    spr(_player.sp, _player.x, _player.y, 1, 1, _player.sp_flipx, _player.sp_flipy)
+    spr(_player.animation_sprites_walk[_player.animation_idx], _player.x, _player.y, 1, 1, _player.sp_flipx, _player.sp_flipy)
 end
 
 function timer_health_tick(_player, _game_duration_max_secs)
