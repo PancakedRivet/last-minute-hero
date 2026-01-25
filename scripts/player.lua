@@ -29,15 +29,12 @@ function new_player()
     return player
 end
 
+-- Update player position based on input and handle collisions
 function update_position(_player)
 
     local current_pos_x = _player.x
     local current_pos_y = _player.y
 
-    local max_pos_x = 122
-    local max_pos_y = 120
-    local min_pos_x = -2
-    local min_pos_y = 10
     local _update_animation_walk = false
 
     -- Move player based on input
@@ -59,21 +56,13 @@ function update_position(_player)
         _player.y += _player.speed
     end
 
-    if(map_collide(_player,0)) _player.x=current_pos_x --undo if collide
-
-    -- Check boundaries and update animation flag
-    if _player.x > min_pos_x and _player.x < max_pos_x then
+    -- Check collisions
+    if current_pos_x != _player.x or current_pos_y != _player.y then
+        if(map_collide(_player,0)) _player.x=current_pos_x
+        if(map_collide(_player,0)) _player.y=current_pos_y
         _update_animation_walk = true
-    else
-        _player.x = current_pos_x
     end
-
-    if _player.y > min_pos_y and _player.y < max_pos_y then
-        _update_animation_walk = true
-    else
-        _player.y = current_pos_y
-    end
-
+    
     if _update_animation_walk then
         update_animation_walk(_player, #player_animation_sprites_walk, player_animation_frames_per_sprite)
     else
