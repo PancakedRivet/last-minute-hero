@@ -44,7 +44,10 @@ end
 -- Draw enemies
 function draw_enemies(_enemies)
     for enemy in all(_enemies) do
-        draw_status_bar(enemy.health, enemy.max_health, enemy.x - 3, enemy.y - 5, enemy.x + 8, enemy.y - 4)
         spr(enemy_animation_sprites_walk[enemy.animation_idx], enemy.x, enemy.y)
+    end
+    -- Draw the health bars after frawing the sprites so that they appear on top
+    for enemy in all(_enemies) do
+        draw_status_bar(enemy.health, enemy.max_health, enemy.x - 3, enemy.y - 5, enemy.x + 8, enemy.y - 4)
     end
 end

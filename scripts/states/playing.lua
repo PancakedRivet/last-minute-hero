@@ -25,13 +25,9 @@ function draw_playing()
     map()
     
     -- full sprite row
-    draw_row(48,mapx,mapy)    --hills
+    draw_row(48,mapx,mapy) --hills
     --draw reduced row sprites
-    -- draw_rr(4,mapx,mapy) --stone smooth
-    draw_rr(80,mapx,mapy) --water smooth
-    -- draw_rr(42,mapx,mapy) --tracks
-    -- draw_rr(10,mapx,mapy)    --cavewall
-    -- draw_rr(26,mapx,mapy)    --lava
+    draw_rr(80,mapx,mapy) --water
 
     -- Reset camera
     camera(0,0)

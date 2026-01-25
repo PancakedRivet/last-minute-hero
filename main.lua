@@ -30,8 +30,6 @@ function _init()
         }
     }
     shop_selected_index = 1
-    
-    
 
     mapx=0 mapy=0
     --lookup table for the reduced map tileset
