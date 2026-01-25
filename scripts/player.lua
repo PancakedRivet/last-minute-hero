@@ -6,8 +6,8 @@ function new_player()
         sp = 48,
         x = 64,
         y = 64,
-        w=8,
-        h=4,
+        w = 7,
+        h = 7,
         sp_flipx = false,
         sp_flipy = false,
         animation_idx = 1,
@@ -58,8 +58,9 @@ function update_position(_player)
 
     -- Check collisions
     if current_pos_x != _player.x or current_pos_y != _player.y then
-        if(map_collide(_player,0)) _player.x=current_pos_x
-        if(map_collide(_player,0)) _player.y=current_pos_y
+        local collision_flag = 0 --flag set on map tiles for collision
+        if(map_collide(_player, collision_flag)) _player.x=current_pos_x
+        if(map_collide(_player, collision_flag)) _player.y=current_pos_y
         _update_animation_walk = true
     end
     

@@ -21,7 +21,6 @@ end
 
 function draw_playing()
     cls()
-    camera(8,0)
     map()
     
     -- full sprite row
@@ -29,10 +28,8 @@ function draw_playing()
     --draw reduced row sprites
     draw_rr(80,mapx,mapy) --water
 
-    -- Reset camera
-    camera(0,0)
-
     draw_player(player)
+    camera(8,0)
     draw_ui(player)
     draw_enemies(enemies)
     draw_coins()

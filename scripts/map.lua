@@ -33,7 +33,8 @@ function draw_rr(sprstart,mx,my)
     end
 end
 
---"1,2,3|4,5,6" -> {{1,2,3},{4,5,6}}
+--spt converts a data string into a 2d array
+--e.g. "1,2,3|4,5,6" -> {{1,2,3},{4,5,6}}
 function spt(datastring)
     local v=split(datastring,"|")
     for i=1,#v do 
@@ -42,16 +43,22 @@ function spt(datastring)
     return v
 end
 
---map collisions
---checks map() for collisions   
+--map_collide checks map() for collisions 
+--between obj and tiles with a set flag
 function map_collide(obj,flag)
+    local sprite_size = 8 -- 8px x 8px sprites
+    -- width and height of the object assume top left corner is 0,0
     local x,y,w,h = obj.x,obj.y,obj.w,obj.h
-    local x0,y0 = (x+1)\8,(y+1)\8
-    local x1,y1 = (x+w-2)\8,(y+h-2)\8
+    -- Get the pixel coordinates of the top left corner of the object
+    local x0,y0 = (x+1)\sprite_size,(y+1)\sprite_size
+    -- get the pixel coordinates of the bottom right corner of the object
+    local x1,y1 = (x+w-1)\sprite_size,(y+h-1)\sprite_size
+    -- get the map tile values at the four corners of the object
     local m1=mget(x0,y0)
     local m2=mget(x1,y0)
     local m3=mget(x0,y1)
     local m4=mget(x1,y1)
+    -- check if any of the tiles have the collision flag set
     if fget(m1,flag)
         or fget(m2,flag)
         or fget(m3,flag)
