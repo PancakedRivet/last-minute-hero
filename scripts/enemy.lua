@@ -2,7 +2,6 @@ enemy_animation_sprites_walk = {32,33,34,35}
 enemy_animation_frames_per_sprite = 8
 
 function update_enemies()
-    -- Placeholder for enemy update logic
     if count(enemies) < max_enemies then
         -- Spawn a new enemy
         add(enemies, new_enemy())
