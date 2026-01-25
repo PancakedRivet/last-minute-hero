@@ -6,6 +6,8 @@ function new_player()
         sp = 48,
         x = 64,
         y = 64,
+        w=8,
+        h=4,
         sp_flipx = false,
         sp_flipy = false,
         animation_idx = 1,
@@ -28,40 +30,48 @@ function new_player()
 end
 
 function update_position(_player)
+
+    local current_pos_x = _player.x
+    local current_pos_y = _player.y
+
     local max_pos_x = 122
     local max_pos_y = 120
     local min_pos_x = -2
     local min_pos_y = 10
     local _update_animation_walk = false
 
+    -- Move player based on input
     if btn(⬅️) then
-        if _player.x - _player.speed > min_pos_x then
-            _player.x -= _player.speed
-            _update_animation_walk = true
-        end
+        _player.x -= _player.speed
         _player.sp_flipx = true
     end
 
     if btn(➡️) then
-        if _player.x + _player.speed < max_pos_x then
-            _player.x += _player.speed
-            _update_animation_walk = true
-        end
+        _player.x += _player.speed
         _player.sp_flipx = false
     end
 
     if btn(⬆️) then
-        if _player.y - _player.speed > min_pos_y then
-            _player.y -= _player.speed
-            _update_animation_walk = true
-        end
+        _player.y -= _player.speed
     end
 
     if btn(⬇️) then
-        if _player.y + _player.speed < max_pos_y then
-            _player.y += _player.speed
-            _update_animation_walk = true
-        end
+        _player.y += _player.speed
+    end
+
+    if(map_collide(_player,0)) _player.x=current_pos_x --undo if collide
+
+    -- Check boundaries and update animation flag
+    if _player.x > min_pos_x and _player.x < max_pos_x then
+        _update_animation_walk = true
+    else
+        _player.x = current_pos_x
+    end
+
+    if _player.y > min_pos_y and _player.y < max_pos_y then
+        _update_animation_walk = true
+    else
+        _player.y = current_pos_y
     end
 
     if _update_animation_walk then

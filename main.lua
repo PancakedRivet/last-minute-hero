@@ -30,6 +30,11 @@ function _init()
         }
     }
     shop_selected_index = 1
+    
+    -- Map variables
+    mapx=0 mapy=0
+    --lookup table for reduced set
+    rsl=spt("0,0,0|0,0,0|0,1,0|1,0,0|0,0,1|3,1,0|4,0,0|2,0,0|0,1,1|4,1,0|3,0,0|2,1,0|1,0,1|2,0,1|2,1,1|5,0,0")
 end
 
 -- Core update logic here
