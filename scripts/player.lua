@@ -58,9 +58,8 @@ function update_position(_player)
 
     -- Check collisions
     if current_pos_x != _player.x or current_pos_y != _player.y then
-        local collision_flag = 0 --flag set on map tiles for collision
-        if(map_collide(_player, collision_flag)) _player.x=current_pos_x
-        if(map_collide(_player, collision_flag)) _player.y=current_pos_y
+        if(map_collide(_player, game_flags.collision)) _player.x=current_pos_x
+        if(map_collide(_player, game_flags.collision)) _player.y=current_pos_y
         _update_animation_walk = true
     end
     

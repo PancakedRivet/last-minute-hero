@@ -57,7 +57,7 @@ function draw_shop(_camera)
     local line_height = 10
     local exit_index = get_shop_exit_index()
     
-    draw_ui(player)
+    draw_ui(player, _camera)
     print("welcome to the shop!", _display_x_start, _display_y_start, colours.white)
     -- Add some space before listing items
     _display_y_start += line_height * 2

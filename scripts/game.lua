@@ -11,6 +11,10 @@ game_sprites = {
     score = 19
 }
 
+game_flags = {
+    collision = 0
+}
+
 colours ={
     black = 0,
     dark_blue = 1,

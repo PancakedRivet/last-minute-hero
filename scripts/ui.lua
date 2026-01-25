@@ -118,6 +118,7 @@ function draw_shop_health_preview(_player, _restore_amount, _camera)
     )
     draw_hp_text(
         min(_player.health + _restore_amount, _player.max_health),
-        _player.max_health
+        _player.max_health,
+        _camera
     )
 end

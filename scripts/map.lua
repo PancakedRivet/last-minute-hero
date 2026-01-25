@@ -1,3 +1,8 @@
+map_size = {
+    width = 128,
+    height = 128
+}
+
 --get offset number from map
 --s is the sprite thats being matched
 function gos(x,y,s)

@@ -31,12 +31,13 @@ function _init()
     }
     shop_selected_index = 1
 
-    camera = {
+    camera_position = {
         x = 8, -- start with an offset to account for the water tiles being against the left edge
         y = 0
     }
 
-    mapx=0 mapy=0
+    mapx = 0 
+    mapy = 0
     --lookup table for the reduced map tileset
     rsl=spt("0,0,0|0,0,0|0,1,0|1,0,0|0,0,1|3,1,0|4,0,0|2,0,0|0,1,1|4,1,0|3,0,0|2,1,0|1,0,1|2,0,1|2,1,1|5,0,0")
 end
@@ -64,21 +65,21 @@ end
 -- Core draw logic here
 function _draw()
     cls()
-    camera(camera.x,camera.y)
+    camera(camera_position.x,camera_position.y)
     if game_state == game_states.new_game then
-        draw_new_game(camera)
+        draw_new_game(camera_position)
         return
     end
     if game_state == game_states.game_over then
-        draw_game_over(camera)
+        draw_game_over(camera_position)
         return
     end
     if game_state == game_states.playing then
-        draw_playing(camera)
+        draw_playing(camera_position)
         return
     end
     if game_state == game_states.shop then
-        draw_shop(camera)
+        draw_shop(camera_position)
         return
     end
 end

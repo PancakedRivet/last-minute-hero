@@ -25,8 +25,7 @@ function update_enemies()
 end
 
 function new_enemy()
-    local enemy_x = ceil(rnd() * 120)
-    local enemy_y = ceil(rnd() * 110) + 10
+    local enemy_x, enemy_y = spawn_enemy()
     local enemy = {
         x = enemy_x,
         y = enemy_y,
@@ -40,6 +39,23 @@ function new_enemy()
     }
     return enemy
 end
+
+function spawn_enemy()
+    local enemy_x = 0
+    local enemy_y = 0
+    local m1 = 0
+    local f1 = 1
+
+    while f1 do
+        enemy_x = ceil(rnd() * map_size.width)
+        enemy_y = ceil(rnd() * map_size.height)
+        m1 = mget(enemy_x / 8, enemy_y / 8)
+        f1 = fget(m1, game_flags.collision)
+    end
+
+    return enemy_x, enemy_y
+end
+
 
 -- Draw enemies
 function draw_enemies(_enemies)
