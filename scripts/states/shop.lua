@@ -46,10 +46,10 @@ function update_shop()
     end
 end
 
-function draw_shop()
+function draw_shop(_camera)
     local index = 1
-    local _display_x_start = 6
-    local _display_y_start = 20
+    local _display_x_start = 6 + _camera.x
+    local _display_y_start = 20 + _camera.y
     local _sprite_y_offset = -1
     local _sprite_x_offset = 6
     local _shop_cost_x_offset = 28
@@ -84,6 +84,6 @@ function draw_shop()
     end
 
     if shop_selected_index <= #shop_items and shop_items[shop_selected_index].name == shop_item_names.health_item_name then
-        draw_shop_health_preview(player, item_health_restore)
+        draw_shop_health_preview(player, item_health_restore, _camera)
     end
 end

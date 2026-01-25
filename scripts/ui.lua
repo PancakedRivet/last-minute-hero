@@ -25,34 +25,34 @@ local function get_bar_colour(_current, _max)
     end
 end
 
-local function draw_hp_text(_current_hp, _max_hp)
+local function draw_hp_text(_current_hp, _max_hp, _camera)
     print(
         _current_hp .. "/" .. _max_hp,
-        ui_pos.hp_bar.x0 + ((ui_pos.hp_bar.x1 - ui_pos.hp_bar.x0) / 2) - (6 * #tostr(_max_hp) / 2),
-        ui_pos.hp_bar.y0,
+        ui_pos.hp_bar.x0 + ((ui_pos.hp_bar.x1 - ui_pos.hp_bar.x0) / 2) - (6 * #tostr(_max_hp) / 2) + _camera.x,
+        ui_pos.hp_bar.y0 + _camera.y,
         colours.white
     )
 end
 
 -- The main UI with health, coins and score
-function draw_ui(_player)
+function draw_ui(_player, _camera)
     -- UI Background
-    rectfill(ui_pos.background.x0, ui_pos.background.y0, ui_pos.background.x1, ui_pos.background.y1, colours.light_grey)
+    rectfill(ui_pos.background.x0 + _camera.x, ui_pos.background.y0 + _camera.y, ui_pos.background.x1 + _camera.x, ui_pos.background.y1 + _camera.y, colours.light_grey)
     -- Health Bar UI
-    draw_status_bar(_player.health, _player.max_health, ui_pos.hp_bar.x0, ui_pos.hp_bar.y0, ui_pos.hp_bar.x1, ui_pos.hp_bar.y1)
-    spr(game_sprites.health, ui_pos.hp_icon.x, ui_pos.hp_icon.y)
+    draw_status_bar(_player.health, _player.max_health, ui_pos.hp_bar.x0 + _camera.x, ui_pos.hp_bar.y0 + _camera.y, ui_pos.hp_bar.x1 + _camera.x, ui_pos.hp_bar.y1 + _camera.y)
+    spr(game_sprites.health, ui_pos.hp_icon.x + _camera.x, ui_pos.hp_icon.y + _camera.y)
 
     -- In the shop, the health text is drawn separately to allow for the health preview overlay to be drawn over the bar correctly
     if not (game_state == game_states.shop and shop_selected_index <= #shop_items and shop_items[shop_selected_index].name == shop_item_names.health_item_name) then
-        draw_hp_text(_player.health, _player.max_health)
+        draw_hp_text(_player.health, _player.max_health, _camera)
     end
 
     -- Coin UI
-    spr(game_sprites.coin, ui_pos.coin_icon.x, ui_pos.coin_icon.y)
-    print(_player.coins, ui_pos.coin_text.x, ui_pos.coin_text.y, colours.white)
+    spr(game_sprites.coin, ui_pos.coin_icon.x + _camera.x, ui_pos.coin_icon.y + _camera.y)
+    print(_player.coins, ui_pos.coin_text.x + _camera.x, ui_pos.coin_text.y + _camera.y, colours.white)
     -- Score UI
-    spr(game_sprites.score, ui_pos.score_icon.x, ui_pos.score_icon.y)
-    print(_player.score, ui_pos.score_text.x, ui_pos.score_text.y, colours.white)
+    spr(game_sprites.score, ui_pos.score_icon.x + _camera.x, ui_pos.score_icon.y + _camera.y)
+    print(_player.score, ui_pos.score_text.x + _camera.x, ui_pos.score_text.y + _camera.y, colours.white)
 end
 
 function draw_status_bar(_current_value, _max_value, _x0, _y0, _x1, _y1)
@@ -89,7 +89,7 @@ end
 
 -- If the player is hovering over the health item in the shop,
 -- show the amount of health that would be restored on the health bar
-function draw_shop_health_preview(_player, _restore_amount)
+function draw_shop_health_preview(_player, _restore_amount, _camera)
     local width = ui_pos.hp_bar.x1 - ui_pos.hp_bar.x0
 
     local current_filled_width = get_bar_width(_player.health, _player.max_health, width)
@@ -110,10 +110,10 @@ function draw_shop_health_preview(_player, _restore_amount)
     restored_hp_positions.x1 = min(ui_pos.hp_bar.x0 + hp_bar_border_width + width, restored_hp_positions.x1)
 
     rectfill(
-        restored_hp_positions.x0,
-        restored_hp_positions.y0,
-        restored_hp_positions.x1,
-        restored_hp_positions.y1,
+        restored_hp_positions.x0 + _camera.x,
+        restored_hp_positions.y0 + _camera.y,
+        restored_hp_positions.x1 + _camera.x,
+        restored_hp_positions.y1 + _camera.y,
         14
     )
     draw_hp_text(

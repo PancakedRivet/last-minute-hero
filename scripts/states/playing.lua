@@ -19,7 +19,7 @@ function update_playing()
     update_attack(player)
 end
 
-function draw_playing()
+function draw_playing(_camera)
     cls()
     map()
     
@@ -29,8 +29,8 @@ function draw_playing()
     draw_rr(80,mapx,mapy) --water
 
     draw_player(player)
-    camera(8,0)
-    draw_ui(player)
+    
+    draw_ui(player, _camera)
     draw_enemies(enemies)
     draw_coins()
 end
