@@ -48,13 +48,13 @@ function spt(datastring)
     return v
 end
 
---map_collide checks map() for collisions 
+--map_collision checks map() for collisions 
 --between obj and tiles with a set flag
-function map_collide(obj,flag)
+function map_collision(obj,flag)
     local sprite_size = 8 -- 8px x 8px sprites
     -- width and height of the object assume top left corner is 0,0
     local x,y,w,h = obj.x,obj.y,obj.w,obj.h
-    -- Get the pixel coordinates of the top left corner of the object
+    -- get the pixel coordinates of the top left corner of the object
     local x0,y0 = (x+1)\sprite_size,(y+1)\sprite_size
     -- get the pixel coordinates of the bottom right corner of the object
     local x1,y1 = (x+w-1)\sprite_size,(y+h-1)\sprite_size
@@ -64,13 +64,11 @@ function map_collide(obj,flag)
     local m3=mget(x0,y1)
     local m4=mget(x1,y1)
     -- check if any of the tiles have the collision flag set
-    if fget(m1,flag)
-        or fget(m2,flag)
-        or fget(m3,flag)
-        or fget(m4,flag)
-    then
-        return true
-    else
-        return false
-    end
+    collisions = {
+        top_left = fget(m1,flag),
+        top_right = fget(m2,flag),
+        bottom_left = fget(m3,flag),
+        bottom_right = fget(m4,flag)
+    }
+    return collisions
 end

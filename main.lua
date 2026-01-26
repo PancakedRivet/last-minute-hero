@@ -67,6 +67,7 @@ function _draw()
     cls()
 
     camera(camera_position.x,camera_position.y)
+
     if game_state == game_states.new_game then
         draw_new_game(camera_position)
         return
