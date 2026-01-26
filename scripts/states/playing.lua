@@ -27,6 +27,7 @@ function draw_playing(_camera)
     draw_row(48,mapx,mapy) --hills
     --draw reduced row sprites
     draw_rr(80,mapx,mapy) --water
+    draw_rr(96,mapx,mapy) --stone
 
     draw_player(player)
     

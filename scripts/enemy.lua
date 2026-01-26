@@ -9,6 +9,7 @@ function update_enemies()
     -- move enemies towards player
     for enemy in all(enemies) do
         -- check horizontal movement
+        local current_x, current_y = enemy.x, enemy.y
         local dx = abs(player.x - enemy.x)
         local dy = abs(player.y - enemy.y)
         local x_dir = sgn(player.x - enemy.x)
@@ -19,6 +20,20 @@ function update_enemies()
         if dy > enemy.attack_range_y then
             enemy.y += enemy.speed * y_dir
         end
+
+        -- check collisions
+        if current_x != enemy.x or current_y != enemy.y then
+            collisions = map_collision(enemy, game_flags.collision)
+            -- if we collide vertically (above or below), reset y position
+            if (collisions.top_left and collisions.top_right) or (collisions.bottom_left and collisions.bottom_right) then
+                enemy.y=current_y
+            end
+            -- if we collide horizontally (left or right), reset x position
+            if (collisions.top_left and collisions.bottom_left) or (collisions.top_right and collisions.bottom_right) then
+                enemy.x=current_x
+            end
+        end
+
         -- update enemy animations
         update_animation_walk(enemy, #enemy_animation_sprites_walk, enemy_animation_frames_per_sprite)
     end
@@ -29,6 +44,8 @@ function new_enemy()
     local enemy = {
         x = enemy_x,
         y = enemy_y,
+        w = 7, 
+        h = 7,
         health = 20,
         max_health = 20,
         speed = 1,
@@ -48,11 +65,12 @@ function spawn_enemy()
     local m1 = 0
     local f1 = 1
 
+    -- loop until we find a non-collision tile to spawn the enemy on
     while f1 do
         enemy_x = ceil(rnd() * map_size.width)
         enemy_y = ceil(rnd() * map_size.height)
-        m1 = mget(enemy_x / 8, enemy_y / 8)
-        f1 = fget(m1, game_flags.collision)
+        local obj = {x = enemy_x, y = enemy_y, w = 7, h = 7}
+        f1 = any_collision(obj, game_flags.collision)
     end
 
     return enemy_x, enemy_y

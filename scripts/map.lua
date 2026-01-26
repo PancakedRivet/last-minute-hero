@@ -72,3 +72,8 @@ function map_collision(obj,flag)
     }
     return collisions
 end
+
+function any_collision(obj,flag)
+    local collisions = map_collision(obj,flag)
+    return collisions.top_left or collisions.top_right or collisions.bottom_left or collisions.bottom_right
+end
