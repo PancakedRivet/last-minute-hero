@@ -1,7 +1,6 @@
 player_animation_sprites_walk = {48, 49, 50, 51}
 player_animation_frames_per_sprite_walk = 6
 player_animation_sprites_attack = {52, 53, 54, 55}
-player_animation_frames_per_sprite_attack = 4
 
 function new_player()
     local player = {
@@ -18,10 +17,11 @@ function new_player()
         health = 60,
         max_health = 60,
         attack = 10,
-        attack_tick = 0,
-        attack_tick_max = 15,
-        attack_tick_start = 10,
-        attack_tick_end = 5,
+        attacking = false,
+        attack_tick_current = 1,
+        attack_tick_active_start = 2,
+        attack_tick_active_end = 4,
+        attack_tick_stop = 6,
         attack_animation_idx = 1,
         defense = 5,
         score = 0,
@@ -84,16 +84,21 @@ end
 
 function update_attack(_player)
     -- only attack if not already attacking
-    if btnp(❎) and _player.attack_tick == 0 then
-        _player.attack_tick = _player.attack_tick_max -- Attack duration in ticks
+    if btnp(❎) and not _player.attacking then
+        _player.attacking = true
     end
-    if _player.attack_tick > 0 then
-        _player.attack_tick -= 1
+    if _player.attacking then
+        _player.attack_tick_current += 1
         -- check for enemy collisions
         local sprite_width = 8
         local attack_sgn = _player.sp_flipx and 1 or -1
         local attack_range = sprite_width * attack_sgn
-        if _player.attack_tick < _player.attack_tick_start and _player.attack_tick > _player.attack_tick_end then
+
+        -- update the attack animation 
+        _player.attack_animation_idx = ceil((_player.attack_tick_current / _player.attack_tick_stop) * #player_animation_sprites_attack)
+        
+        -- check for hits during the active frames
+        if _player.attack_tick_active_start < _player.attack_tick_current and _player.attack_tick_current < _player.attack_tick_active_end then
             for enemy in all(enemies) do
                 if not enemy.attacked then
                     if (_player.x - enemy.x) < attack_range and abs(_player.y - enemy.y) < abs(attack_range) then
@@ -109,11 +114,10 @@ function update_attack(_player)
             end
         end
     end
-    if _player.attack_tick < 0 then
-        _player.attack_tick = 0
-    end
     -- stop the same enemy from being attacked multiple times in one attack
-    if _player.attack_tick == 0 then
+    if _player.attack_tick_current > _player.attack_tick_stop then
+        _player.attacking = false
+        _player.attack_tick_current = 0
         for enemy in all(enemies) do
             enemy.attacked = false
         end
@@ -124,7 +128,7 @@ end
 -- and if the player are attacking, draw an attack effect
 function draw_player(_player)
     spr(player_animation_sprites_walk[_player.walk_animation_idx], _player.x, _player.y, 1, 1, _player.sp_flipx, _player.sp_flipy)
-    if _player.attack_tick > 0 then
+    if _player.attacking then
         spr(player_animation_sprites_attack[_player.attack_animation_idx], _player.x + (6 * (_player.sp_flipx and -1 or 1)), _player.y, 1, 1, _player.sp_flipx, _player.sp_flipy)
     end
 end
