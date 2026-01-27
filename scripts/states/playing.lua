@@ -29,9 +29,9 @@ function draw_playing(_camera)
     draw_rr(80,mapx,mapy) --water
     draw_rr(96,mapx,mapy) --stone
 
+    draw_enemies(enemies)
     draw_player(player)
     
     draw_ui(player, _camera)
-    draw_enemies(enemies)
     draw_coins()
 end
