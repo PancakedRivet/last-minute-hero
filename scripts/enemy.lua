@@ -35,7 +35,9 @@ function update_enemies()
         end
 
         -- update enemy animations
-        update_animation_walk(enemy, #enemy_animation_sprites_walk, enemy_animation_frames_per_sprite)
+        new_animation = update_animation(enemy.walk_animation_tick, enemy.walk_animation_idx, #enemy_animation_sprites_walk, enemy_animation_frames_per_sprite)
+        enemy.walk_animation_tick = new_animation.animation_tick
+        enemy.walk_animation_idx = new_animation.animation_idx
     end
 end
 

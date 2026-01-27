@@ -74,7 +74,9 @@ function update_position(_player)
     end
     
     if _update_animation_walk then
-        update_animation_walk(_player, #player_animation_sprites_walk, player_animation_frames_per_sprite_walk)
+        new_animation = update_animation(_player.walk_animation_tick, _player.walk_animation_idx, #player_animation_sprites_walk, player_animation_frames_per_sprite_walk)
+        _player.walk_animation_tick = new_animation.animation_tick
+        _player.walk_animation_idx = new_animation.animation_idx
     else
         _player.walk_animation_idx = 1
     end
@@ -123,7 +125,7 @@ end
 function draw_player(_player)
     spr(player_animation_sprites_walk[_player.walk_animation_idx], _player.x, _player.y, 1, 1, _player.sp_flipx, _player.sp_flipy)
     if _player.attack_tick > 0 then
-        spr(player_animation_sprites_attack[3], _player.x + (6 * (_player.sp_flipx and -1 or 1)), _player.y, 1, 1, _player.sp_flipx, _player.sp_flipy)
+        spr(player_animation_sprites_attack[_player.attack_animation_idx], _player.x + (6 * (_player.sp_flipx and -1 or 1)), _player.y, 1, 1, _player.sp_flipx, _player.sp_flipy)
     end
 end
 

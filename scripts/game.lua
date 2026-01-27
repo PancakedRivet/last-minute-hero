@@ -45,14 +45,19 @@ function draw_coins()
     end
 end
 
--- Update walk animation for a character like the hero or enemy
-function update_animation_walk(_character, _animation_sprite_count, _animation_frames_per_sprite)
-    _character.walk_animation_tick += 1
-    if _character.walk_animation_tick >= _animation_frames_per_sprite then
-        _character.walk_animation_tick = 0
-        _character.walk_animation_idx += 1
-        if _character.walk_animation_idx > _animation_sprite_count then
-            _character.walk_animation_idx = 1
+-- Update animation for a character
+function update_animation(_animation_tick, _animation_idx, _animation_sprite_count, _animation_frames_per_sprite)
+    _animation_tick += 1
+    if _animation_tick >= _animation_frames_per_sprite then
+        _animation_tick = 0
+        _animation_idx += 1
+        if _animation_idx > _animation_sprite_count then
+            _animation_idx = 1
         end
     end
+    new_animation = {
+        animation_tick = _animation_tick,
+        animation_idx = _animation_idx
+    }
+    return new_animation
 end
