@@ -8,8 +8,6 @@ Making a game in PICO-8
 - Better enemy spawn locations
 - Music
 - Intro screen
-- Health animations
-- Score animations
 
 ### Nice-to-haves
 
@@ -18,3 +16,4 @@ Making a game in PICO-8
 - An animation for enemy dying
 - Knockback effect on attack
 - Particle effect on attack
+- Some kind of screenshake or bloody screen ring when nearing death
