@@ -1,7 +1,3 @@
-player_animation_sprites_walk = {48, 49, 50, 51}
-player_animation_frames_per_sprite_walk = 6
-player_animation_sprites_attack = {52, 53, 54, 55}
-
 function new_player()
     local player = {
         sp = 48,
@@ -11,6 +7,8 @@ function new_player()
         h = 7,
         sp_flipx = false,
         sp_flipy = false,
+        walk_animation_sprites = {48, 49, 50, 51},
+        walk_animation_frames_per_sprite = 6,
         walk_animation_idx = 1,
         walk_animation_tick = 0,
         speed = 2,
@@ -23,6 +21,7 @@ function new_player()
         attack_tick_active_end = 4,
         attack_tick_stop = 6,
         attack_animation_idx = 1,
+        attack_animation_sprites = {52, 53, 54, 55},
         defense = 5,
         score = 0,
         score_value = 1,
@@ -74,7 +73,7 @@ function update_position(_player)
     end
     
     if _update_animation_walk then
-        new_animation = update_animation(_player.walk_animation_tick, _player.walk_animation_idx, #player_animation_sprites_walk, player_animation_frames_per_sprite_walk)
+        new_animation = update_animation(_player.walk_animation_tick, _player.walk_animation_idx, #_player.walk_animation_sprites, _player.walk_animation_frames_per_sprite)
         _player.walk_animation_tick = new_animation.animation_tick
         _player.walk_animation_idx = new_animation.animation_idx
     else
@@ -91,7 +90,7 @@ function update_attack(_player)
         _player.attack_tick_current += 1
 
         -- update the attack animation 
-        _player.attack_animation_idx = ceil((_player.attack_tick_current / _player.attack_tick_stop) * #player_animation_sprites_attack)
+        _player.attack_animation_idx = ceil((_player.attack_tick_current / _player.attack_tick_stop) * #_player.attack_animation_sprites)
         
         -- check for hits during the active frames
         if _player.attack_tick_active_start < _player.attack_tick_current and _player.attack_tick_current < _player.attack_tick_active_end then
@@ -126,9 +125,9 @@ end
 -- draw the player sprite 
 -- and if the player are attacking, draw an attack effect
 function draw_player(_player)
-    spr(player_animation_sprites_walk[_player.walk_animation_idx], _player.x, _player.y, 1, 1, _player.sp_flipx, _player.sp_flipy)
+    spr(_player.walk_animation_sprites[_player.walk_animation_idx], _player.x, _player.y, 1, 1, _player.sp_flipx, _player.sp_flipy)
     if _player.attacking then
-        spr(player_animation_sprites_attack[_player.attack_animation_idx], _player.x + (6 * (_player.sp_flipx and -1 or 1)), _player.y, 1, 1, _player.sp_flipx, _player.sp_flipy)
+        spr(_player.attack_animation_sprites[_player.attack_animation_idx], _player.x + (6 * (_player.sp_flipx and -1 or 1)), _player.y, 1, 1, _player.sp_flipx, _player.sp_flipy)
     end
 end
 
