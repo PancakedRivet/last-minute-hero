@@ -61,8 +61,8 @@ function new_enemy()
         health = 20,
         max_health = 20,
         speed = 1,
-        attack = 1,
-        attack_range_x = 6,
+        attack = 2,
+        attack_range_x = 8,
         attack_range_y = 0,
         attack_tick_current = 1,
         attack_tick_active_start = 2,
@@ -105,7 +105,6 @@ function update_attack_enemy(_enemy)
     -- only attack if not already attacking
     if _enemy.attack_tick_cooldown_current == 0 then
         _enemy.attack_tick_current += 1
-        _enemy.attack_tick_cooldown_current = _enemy.attack_tick_cooldown
 
         -- update the attack animation 
         _enemy.attack_animation_idx = ceil((_enemy.attack_tick_current / _enemy.attack_tick_stop) * #_enemy.attack_animation_sprites)
@@ -115,7 +114,8 @@ function update_attack_enemy(_enemy)
             -- check for player collisions
             if not _enemy.attacked_player then
                 -- check the enemy is within attack range and in front of the player
-                if abs(player.x - _enemy.x) < _enemy.attack_range_x and abs(player.y - _enemy.y) < _enemy.attack_range_y and sgn(player.x - _enemy.x) == (player.sp_flipx and 1 or -1) then
+                -- y attack range is extended by 4 pixels to attack in a small vertical area
+                if abs(player.x - _enemy.x) < _enemy.attack_range_x and abs(player.y - _enemy.y) < _enemy.attack_range_y + 4 and sgn(player.x - _enemy.x) == (_enemy.sp_flipx and -1 or 1) then
                     player.health -= _enemy.attack
                     _enemy.attacked_player = true
                 end
@@ -125,6 +125,7 @@ function update_attack_enemy(_enemy)
     -- stop the same enemy from being attacked multiple times in one attack
     if _enemy.attack_tick_current > _enemy.attack_tick_stop then
         _enemy.attack_tick_current = 0
+        _enemy.attack_tick_cooldown_current = _enemy.attack_tick_cooldown
         _enemy.attacked_player = false
     end
 end
