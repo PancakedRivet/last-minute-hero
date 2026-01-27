@@ -20,6 +20,8 @@ function new_player()
         attack_tick_active_start = 2,
         attack_tick_active_end = 4,
         attack_tick_stop = 6,
+        attack_tick_cooldown_current = 0,
+        attack_tick_cooldown = 10, -- 0.33s at 30fps after the attack ends
         attack_animation_idx = 1,
         attack_animation_sprites = {52, 53, 54, 55},
         defense = 5,
@@ -82,12 +84,16 @@ function update_position(_player)
 end
 
 function update_attack(_player)
+    if not _player.attacking then
+        _player.attack_tick_cooldown_current = max(0, _player.attack_tick_cooldown_current - 1)
+    end
     -- only attack if not already attacking
-    if btnp(❎) and not _player.attacking then
+    if btnp(❎) and not _player.attacking and _player.attack_tick_cooldown_current == 0 then
         _player.attacking = true
     end
     if _player.attacking then
         _player.attack_tick_current += 1
+        _player.attack_tick_cooldown_current = _player.attack_tick_cooldown
 
         -- update the attack animation 
         _player.attack_animation_idx = ceil((_player.attack_tick_current / _player.attack_tick_stop) * #_player.attack_animation_sprites)
