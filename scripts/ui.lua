@@ -40,7 +40,9 @@ function draw_ui(_player, _camera)
     rectfill(ui_pos.background.x0 + _camera.x, ui_pos.background.y0 + _camera.y, ui_pos.background.x1 + _camera.x, ui_pos.background.y1 + _camera.y, colours.light_grey)
     -- Health Bar UI
     draw_status_bar(_player.health, _player.max_health, ui_pos.hp_bar.x0 + _camera.x, ui_pos.hp_bar.y0 + _camera.y, ui_pos.hp_bar.x1 + _camera.x, ui_pos.hp_bar.y1 + _camera.y)
-    spr(game_sprites.health, ui_pos.hp_icon.x + _camera.x, ui_pos.hp_icon.y + _camera.y)
+    local health_pct = _player.health / _player.max_health
+    local health_animation_frame = flr(global_game_tick / ((health_pct * 10) + 3)) % #game_sprites.health_animation + 1
+    spr(game_sprites.health_animation[health_animation_frame], ui_pos.hp_icon.x + _camera.x, ui_pos.hp_icon.y + _camera.y)
 
     -- In the shop, the health text is drawn separately to allow for the health preview overlay to be drawn over the bar correctly
     if not (game_state == game_states.shop and shop_selected_index <= #shop_items and shop_items[shop_selected_index].name == shop_item_names.health_item_name) then
@@ -52,7 +54,8 @@ function draw_ui(_player, _camera)
     spr(game_sprites.coin_animation[coin_animation_frame], ui_pos.coin_icon.x + _camera.x, ui_pos.coin_icon.y + _camera.y)
     print(_player.coins, ui_pos.coin_text.x + _camera.x, ui_pos.coin_text.y + _camera.y, colours.white)
     -- Score UI
-    spr(game_sprites.score, ui_pos.score_icon.x + _camera.x, ui_pos.score_icon.y + _camera.y)
+    local score_animation_frame = flr(global_game_tick / 6) % #game_sprites.score_animation + 1
+    spr(game_sprites.score_animation[score_animation_frame], ui_pos.score_icon.x + _camera.x, ui_pos.score_icon.y + _camera.y)
     print(_player.score, ui_pos.score_text.x + _camera.x, ui_pos.score_text.y + _camera.y, colours.white)
 end
 
