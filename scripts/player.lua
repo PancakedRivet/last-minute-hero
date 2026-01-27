@@ -89,19 +89,18 @@ function update_attack(_player)
     end
     if _player.attacking then
         _player.attack_tick_current += 1
-        -- check for enemy collisions
-        local sprite_width = 8
-        local attack_sgn = _player.sp_flipx and 1 or -1
-        local attack_range = sprite_width * attack_sgn
 
         -- update the attack animation 
         _player.attack_animation_idx = ceil((_player.attack_tick_current / _player.attack_tick_stop) * #player_animation_sprites_attack)
         
         -- check for hits during the active frames
         if _player.attack_tick_active_start < _player.attack_tick_current and _player.attack_tick_current < _player.attack_tick_active_end then
+            -- check for enemy collisions
+            local attack_range = 8
             for enemy in all(enemies) do
                 if not enemy.attacked then
-                    if (_player.x - enemy.x) < attack_range and abs(_player.y - enemy.y) < abs(attack_range) then
+                    -- check the enemy is within attack range and in front of the player
+                    if abs(_player.x - enemy.x) < attack_range and abs(_player.y - enemy.y) < attack_range and sgn(_player.x - enemy.x) == (_player.sp_flipx and 1 or -1) then
                         enemy.health -= _player.attack
                         enemy.attacked = true
                         if enemy.health <= 0 then
