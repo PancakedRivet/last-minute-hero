@@ -123,7 +123,7 @@ end
 function draw_player(_player)
     spr(player_animation_sprites_walk[_player.walk_animation_idx], _player.x, _player.y, 1, 1, _player.sp_flipx, _player.sp_flipy)
     if _player.attack_tick > 0 then
-        spr(player_animation_sprites_attack[_player.attack_animation_idx], _player.x, _player.y, 1, 1, _player.sp_flipx, _player.sp_flipy)
+        spr(player_animation_sprites_attack[3], _player.x + (6 * (_player.sp_flipx and -1 or 1)), _player.y, 1, 1, _player.sp_flipx, _player.sp_flipy)
     end
 end
 
