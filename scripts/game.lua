@@ -47,12 +47,12 @@ end
 
 -- Update walk animation for a character like the hero or enemy
 function update_animation_walk(_character, _animation_sprite_count, _animation_frames_per_sprite)
-    _character.animation_tick += 1
-    if _character.animation_tick >= _animation_frames_per_sprite then
-        _character.animation_tick = 0
-        _character.animation_idx += 1
-        if _character.animation_idx > _animation_sprite_count then
-            _character.animation_idx = 1
+    _character.walk_animation_tick += 1
+    if _character.walk_animation_tick >= _animation_frames_per_sprite then
+        _character.walk_animation_tick = 0
+        _character.walk_animation_idx += 1
+        if _character.walk_animation_idx > _animation_sprite_count then
+            _character.walk_animation_idx = 1
         end
     end
 end

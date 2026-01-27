@@ -53,8 +53,8 @@ function new_enemy()
         attack_range_x = 6,
         attack_range_y = 0,
         attacked = false,
-        animation_idx = 1,
-        animation_tick = 0
+        walk_animation_idx = 1,
+        walk_animation_tick = 0
     }
     return enemy
 end
@@ -80,7 +80,7 @@ end
 -- Draw enemies
 function draw_enemies(_enemies)
     for enemy in all(_enemies) do
-        spr(enemy_animation_sprites_walk[enemy.animation_idx], enemy.x, enemy.y)
+        spr(enemy_animation_sprites_walk[enemy.walk_animation_idx], enemy.x, enemy.y)
     end
     -- draw the health bars after drawing the sprites so that they appear on top
     for enemy in all(_enemies) do
