@@ -63,8 +63,8 @@ function draw_shop(_camera)
     _display_y_start += line_height * 2
     for item in all(shop_items) do
         local _current_value, _proposed_value = item.display_func()
-        spr(game_sprites.coin, _display_x_start, _display_y_start + (line_height * index) + _sprite_y_offset)
-        -- TODO Break this into seperate print statements
+        local coin_animation_frame = flr(global_game_tick / (5 + index)) % #game_sprites.coin_animation + 1
+        spr(game_sprites.coin_animation[coin_animation_frame], _display_x_start, _display_y_start + (line_height * index) + _sprite_y_offset)
         -- The cost of the item and it's name with space for the sprite in between
         spr(item.sprite, _display_x_start + _shop_cost_x_offset, _display_y_start + (line_height * index) + _sprite_y_offset)
         if index == shop_selected_index then

@@ -48,7 +48,8 @@ function draw_ui(_player, _camera)
     end
 
     -- Coin UI
-    spr(game_sprites.coin, ui_pos.coin_icon.x + _camera.x, ui_pos.coin_icon.y + _camera.y)
+    local coin_animation_frame = flr(global_game_tick / 8) % #game_sprites.coin_animation + 1
+    spr(game_sprites.coin_animation[coin_animation_frame], ui_pos.coin_icon.x + _camera.x, ui_pos.coin_icon.y + _camera.y)
     print(_player.coins, ui_pos.coin_text.x + _camera.x, ui_pos.coin_text.y + _camera.y, colours.white)
     -- Score UI
     spr(game_sprites.score, ui_pos.score_icon.x + _camera.x, ui_pos.score_icon.y + _camera.y)

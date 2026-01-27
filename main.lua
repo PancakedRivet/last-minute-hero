@@ -3,6 +3,7 @@ function _init()
     game_state = game_states.new_game
     game_duration_max_secs = 60
     game_tick = 0
+    global_game_tick = 0
     game_fps = 30
     max_enemies = 5
     enemies = {}
@@ -44,6 +45,7 @@ end
 
 -- Core update logic here
 function _update()
+    global_game_tick += 1
     if game_state == game_states.new_game then 
         update_new_game()
         return

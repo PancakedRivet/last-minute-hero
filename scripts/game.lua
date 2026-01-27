@@ -7,8 +7,9 @@ game_states = {
 
 game_sprites = {
     health = 2,
-    coin = 3,
-    score = 19
+    coin = 36,
+    coin_animation = {36, 37, 38, 39},
+    score = 3
 }
 
 game_flags = {
