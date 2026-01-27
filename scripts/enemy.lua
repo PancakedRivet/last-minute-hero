@@ -16,6 +16,11 @@ function update_enemies()
         local y_dir = sgn(player.y - enemy.y)
         if dx > enemy.attack_range_x then
             enemy.x += enemy.speed * x_dir
+            if x_dir > 0 then
+                enemy.sp_flipx = false
+            else
+                enemy.sp_flipx = true
+            end
         end
         if dy > enemy.attack_range_y then
             enemy.y += enemy.speed * y_dir
@@ -34,6 +39,9 @@ function update_enemies()
             end
         end
 
+        -- update attack logic
+        update_attack_enemy(enemy)
+
         -- update enemy animations
         new_animation = update_animation(enemy.walk_animation_tick, enemy.walk_animation_idx, #enemy_animation_sprites_walk, enemy_animation_frames_per_sprite)
         enemy.walk_animation_tick = new_animation.animation_tick
@@ -48,6 +56,8 @@ function new_enemy()
         y = enemy_y,
         w = 7, 
         h = 7,
+        sp_flipx = false,
+        sp_flipy = false,
         health = 20,
         max_health = 20,
         speed = 1,
@@ -63,6 +73,7 @@ function new_enemy()
         attack_animation_idx = 1,
         attack_animation_sprites = {52, 53, 54, 55},
         attacked = false,
+        attacked_player = false,
         walk_animation_idx = 1,
         walk_animation_tick = 0
     }
@@ -87,52 +98,44 @@ function spawn_enemy()
 end
 
 -- update attack logic for the enemies against the player
-function update_attack_enemy(_player)
-    if _player.attack_tick_cooldown_current > 0 then
-        _player.attack_tick_cooldown_current = max(0, _player.attack_tick_cooldown_current - 1)
+function update_attack_enemy(_enemy)
+    if _enemy.attack_tick_cooldown_current > 0 then
+        _enemy.attack_tick_cooldown_current = max(0, _enemy.attack_tick_cooldown_current - 1)
     end
     -- only attack if not already attacking
-    if _player.attack_tick_cooldown_current == 0 then
-        _player.attack_tick_current += 1
-        _player.attack_tick_cooldown_current = _player.attack_tick_cooldown
+    if _enemy.attack_tick_cooldown_current == 0 then
+        _enemy.attack_tick_current += 1
+        _enemy.attack_tick_cooldown_current = _enemy.attack_tick_cooldown
 
         -- update the attack animation 
-        _player.attack_animation_idx = ceil((_player.attack_tick_current / _player.attack_tick_stop) * #_player.attack_animation_sprites)
+        _enemy.attack_animation_idx = ceil((_enemy.attack_tick_current / _enemy.attack_tick_stop) * #_enemy.attack_animation_sprites)
         
         -- check for hits during the active frames
-        if _player.attack_tick_active_start < _player.attack_tick_current and _player.attack_tick_current < _player.attack_tick_active_end then
-            -- check for enemy collisions
-            local attack_range = 8
-            for enemy in all(enemies) do
-                if not enemy.attacked then
-                    -- check the enemy is within attack range and in front of the player
-                    if abs(_player.x - enemy.x) < attack_range and abs(_player.y - enemy.y) < attack_range and sgn(_player.x - enemy.x) == (_player.sp_flipx and 1 or -1) then
-                        enemy.health -= _player.attack
-                        enemy.attacked = true
-                        if enemy.health <= 0 then
-                            del(enemies, enemy)
-                            add(coins, { x = enemy.x, y = enemy.y, sp = game_sprites.coin }) -- spawn a coin where the enemy died
-                            _player.score += _player.score_value
-                        end
-                    end
+        if _enemy.attack_tick_active_start < _enemy.attack_tick_current and _enemy.attack_tick_current < _enemy.attack_tick_active_end then
+            -- check for player collisions
+            if not _enemy.attacked_player then
+                -- check the enemy is within attack range and in front of the player
+                if abs(player.x - _enemy.x) < _enemy.attack_range_x and abs(player.y - _enemy.y) < _enemy.attack_range_y and sgn(player.x - _enemy.x) == (player.sp_flipx and 1 or -1) then
+                    player.health -= _enemy.attack
+                    _enemy.attacked_player = true
                 end
             end
         end
     end
     -- stop the same enemy from being attacked multiple times in one attack
-    if _player.attack_tick_current > _player.attack_tick_stop then
-        _player.attacking = false
-        _player.attack_tick_current = 0
-        for enemy in all(enemies) do
-            enemy.attacked = false
-        end
+    if _enemy.attack_tick_current > _enemy.attack_tick_stop then
+        _enemy.attack_tick_current = 0
+        _enemy.attacked_player = false
     end
 end
 
 -- Draw enemies
 function draw_enemies(_enemies)
     for enemy in all(_enemies) do
-        spr(enemy_animation_sprites_walk[enemy.walk_animation_idx], enemy.x, enemy.y)
+        spr(enemy_animation_sprites_walk[enemy.walk_animation_idx], enemy.x, enemy.y, 1, 1, enemy.sp_flipx, enemy.sp_flipy)
+        if enemy.attack_tick_current > 0 then
+            spr(enemy.attack_animation_sprites[enemy.attack_animation_idx], enemy.x + (6 * (enemy.sp_flipx and -1 or 1)), enemy.y, 1, 1, enemy.sp_flipx, enemy.sp_flipy)
+        end
     end
     -- draw the health bars after drawing the sprites so that they appear on top
     for enemy in all(_enemies) do
