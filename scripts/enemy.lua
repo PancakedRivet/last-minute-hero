@@ -83,15 +83,19 @@ end
 function spawn_enemy()
     local enemy_x = 0
     local enemy_y = 0
-    local m1 = 0
-    local f1 = 1
+    local collision = 0
+    local near_player = true
+    local near_player_distance = 32 -- minimum distance from player to spawn is 4 sprites
+    local can_spawn = false
 
     -- loop until we find a non-collision tile to spawn the enemy on
-    while f1 do
+    while not can_spawn do
         enemy_x = ceil(rnd() * map_size.width)
         enemy_y = ceil(rnd() * map_size.height)
         local obj = {x = enemy_x, y = enemy_y, w = 7, h = 7}
-        f1 = any_collision(obj, game_flags.collision)
+        collision = any_collision(obj, game_flags.collision)
+        near_player = abs(enemy_x - player.x) < near_player_distance and abs(enemy_y - player.y) < near_player_distance
+        can_spawn = not near_player and not collision
     end
 
     return enemy_x, enemy_y
