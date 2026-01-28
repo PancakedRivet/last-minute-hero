@@ -7,6 +7,7 @@ function _init()
     game_fps = 30
     max_enemies = 5
     enemies = {}
+    spawning_enemies = {}
     coins = {}
     shop_item_names = {
         health_item_name = "health",

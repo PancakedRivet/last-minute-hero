@@ -1,11 +1,20 @@
 enemy_animation_sprites_walk = {32,33,34,35}
 enemy_animation_frames_per_sprite = 8
 
-function update_enemies()
-    if count(enemies) < max_enemies then
-        -- spawn a new enemy
-        add(enemies, new_enemy())
+function update_spawning_enemies()
+    for enemy in all(spawning_enemies) do
+        -- handle spawn animation
+        if enemy.spawn_animation_tick > 0 then
+            enemy.spawn_animation_tick -= 1
+        else
+            -- move from spawning_enemies to enemies
+            del(spawning_enemies, enemy)
+            add(enemies, enemy)
+        end
     end
+end
+
+function update_enemies()
     -- move enemies towards player
     for enemy in all(enemies) do
         -- check horizontal movement
@@ -86,6 +95,8 @@ function new_enemy()
         walk_animation_tick = 0,
         knockback_tick = 0,
         knockback_x = 0,
+        spawn_animation_tick = 9,
+        spawn_animation_sprites = {56, 57, 58}
     }
     return enemy
 end
@@ -147,7 +158,7 @@ function update_attack_enemy(_enemy)
     end
 end
 
--- Draw enemies
+-- draw enemies
 function draw_enemies(_enemies)
     for enemy in all(_enemies) do
         spr(enemy_animation_sprites_walk[enemy.walk_animation_idx], enemy.x, enemy.y, 1, 1, enemy.sp_flipx, enemy.sp_flipy)
@@ -158,5 +169,14 @@ function draw_enemies(_enemies)
     -- draw the health bars after drawing the sprites so that they appear on top
     for enemy in all(_enemies) do
         draw_status_bar(enemy.health, enemy.max_health, enemy.x - 3, enemy.y - 5, enemy.x + 8, enemy.y - 4)
+    end
+end
+
+-- draw spawning enemies
+function draw_spawning_enemies(_spawning_enemies)
+    for enemy in all(_spawning_enemies) do
+        if enemy.spawn_animation_tick > 0 then
+            spr(enemy.spawn_animation_sprites[3 - flr(enemy.spawn_animation_tick / #enemy.spawn_animation_sprites)], enemy.x, enemy.y, 1, 1, enemy.sp_flipx, enemy.sp_flipy)
+        end
     end
 end

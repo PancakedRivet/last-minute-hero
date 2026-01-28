@@ -8,8 +8,15 @@ function update_playing()
         game_state = game_states.game_over
         return
     end
+
+    if count(enemies) + count(spawning_enemies) < max_enemies then
+        -- spawn a new enemy
+        add(spawning_enemies, new_enemy())
+    end
+
     update_position(player)
     update_check_coin_collection(player)
+    update_spawning_enemies()
     update_enemies()
     update_attack(player)
 
@@ -43,6 +50,7 @@ function draw_playing(_camera)
 
     draw_corpse(corpse)
 
+    draw_spawning_enemies(spawning_enemies)
     draw_enemies(enemies)
     draw_player(player)
     

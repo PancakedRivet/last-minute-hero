@@ -52,6 +52,7 @@ function new_game()
         score_penalty = 10
     }
     enemies = {}
+    spawning_enemies = {}
     coins = {}
     game_tick = 0
     mapx = 0 
