@@ -14,6 +14,7 @@ game_sprites = {
     score_animation = {42, 43, 44, 45, 46},
     shop_opened = 6,
     shop_closed = 5,
+    corpse = 12
 }
 
 game_flags = {
@@ -42,6 +43,14 @@ colours ={
 
 function new_game()
     player = new_player()
+    corpse = {
+        x = 96,
+        y = 96,
+        sp = game_sprites.corpse,
+        attacked = false,
+        gold_value = 25,
+        score_penalty = 10
+    }
     enemies = {}
     coins = {}
     game_tick = 0

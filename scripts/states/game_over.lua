@@ -1,5 +1,6 @@
 function update_game_over()
-    if btnp(❎) then
+    player.game_over_cooldown = max(0, player.game_over_cooldown - 1)
+    if player.game_over_cooldown == 0 and btnp(❎) then
         new_game()
     end
 end

@@ -5,7 +5,6 @@ Making a game in PICO-8
 ## To-Do List
 
 - Music
-- Intro screen
 
 ### Nice-to-haves
 

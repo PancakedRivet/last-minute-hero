@@ -38,7 +38,8 @@ function new_player()
         dash_cooldown_max = 60,
         dash_speed_boost = 3,
         dash_direction = {x=0, y=0},
-        dash_animation_sprites = {16, 17, 18, 19}
+        dash_animation_sprites = {16, 17, 18, 19},
+        game_over_cooldown = 30
     }
     return player
 end
@@ -183,6 +184,14 @@ function update_attack(_player)
                             _player.kill_count += 1
                         end
                     end
+                end
+            end
+            -- check for corpse collision
+            if not corpse.attacked then
+                if abs(_player.x - corpse.x) < attack_range and abs(_player.y - corpse.y) < attack_range and sgn(_player.x - corpse.x) == (_player.sp_flipx and 1 or -1) then
+                    corpse.attacked = true
+                    _player.coins += corpse.gold_value
+                    _player.score -= corpse.score_penalty
                 end
             end
         end

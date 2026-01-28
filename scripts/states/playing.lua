@@ -41,9 +41,17 @@ function draw_playing(_camera)
     draw_rr(80,mapx,mapy) --water
     draw_rr(96,mapx,mapy) --stone
 
+    draw_corpse(corpse)
+
     draw_enemies(enemies)
     draw_player(player)
     
     draw_ui(player, _camera)
     draw_coins()
+end
+
+function draw_corpse(_corpse)
+    if not _corpse.attacked then
+        spr(_corpse.sp, _corpse.x, _corpse.y)
+    end
 end
