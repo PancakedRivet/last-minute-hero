@@ -11,11 +11,14 @@ game_sprites = {
     coin = 36,
     coin_animation = {36, 37, 38, 39},
     score = 42,
-    score_animation = {42, 43, 44, 45, 46}
+    score_animation = {42, 43, 44, 45, 46},
+    shop_opened = 6,
+    shop_closed = 5,
 }
 
 game_flags = {
-    collision = 0
+    collision = 0,
+    shop = 1
 }
 
 colours ={

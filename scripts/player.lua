@@ -29,6 +29,7 @@ function new_player()
         score_value = 1,
         coins = 0,
         coin_value = 1,
+        is_in_shop = false
     }
     return player
 end
