@@ -6,7 +6,6 @@ Making a game in PICO-8
 
 - Music
 - Intro screen
-- A dash for the player
 
 ### Nice-to-haves
 

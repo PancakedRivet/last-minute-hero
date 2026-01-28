@@ -42,12 +42,19 @@ colours ={
 
 function new_game()
     player = new_player()
+    enemies = {}
+    coins = {}
+    game_tick = 0
+    mapx = 0 
+    mapy = 0
     game_state = game_states.playing
 end
 
 function draw_coins()
     for coin in all(coins) do
-        spr(coin.sp, coin.x, coin.y)
+        -- spr(coin.sp, coin.x, coin.y)
+        local coin_animation_frame = flr((global_game_tick - coin.current_tick) / (5)) % #game_sprites.coin_animation + 1
+        spr(game_sprites.coin_animation[coin_animation_frame], coin.x, coin.y)
     end
 end
 
