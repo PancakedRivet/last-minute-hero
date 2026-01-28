@@ -36,7 +36,8 @@ function new_player()
         dash_cooldown_current = 0,
         dash_cooldown_max = 60,
         dash_speed_boost = 3,
-        dash_direction = {x=0, y=0}
+        dash_direction = {x=0, y=0},
+        dash_animation_sprites = {16, 17, 18, 19}
     }
     return player
 end
@@ -197,6 +198,9 @@ function draw_player(_player)
     spr(_player.walk_animation_sprites[_player.walk_animation_idx], _player.x, _player.y, 1, 1, _player.sp_flipx, _player.sp_flipy)
     if _player.attacking then
         spr(_player.attack_animation_sprites[_player.attack_animation_idx], _player.x + (6 * (_player.sp_flipx and -1 or 1)), _player.y, 1, 1, _player.sp_flipx, _player.sp_flipy)
+    end
+    if _player.dashing then
+        spr(_player.dash_animation_sprites[_player.dash_tick_current + 1], _player.x + (6 * (_player.sp_flipx and 1 or -1)), _player.y, 1, 1, _player.sp_flipx, _player.sp_flipy)
     end
 end
 
