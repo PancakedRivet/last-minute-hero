@@ -29,7 +29,14 @@ function new_player()
         score_value = 1,
         coins = 0,
         coin_value = 1,
-        is_in_shop = false
+        is_in_shop = false,
+        dashing = false,
+        dash_tick_current = 0,
+        dash_tick_max = 4,
+        dash_cooldown_current = 0,
+        dash_cooldown_max = 60,
+        dash_speed_boost = 3,
+        dash_direction = {x=0, y=0}
     }
     return player
 end
@@ -39,26 +46,81 @@ function update_position(_player)
 
     local current_pos_x = _player.x
     local current_pos_y = _player.y
+    local buttons_pressed = {
+        left = btn(⬅️),
+        right = btn(➡️),
+        up = btn(⬆️),
+        down = btn(⬇️),
+        dash = btn(🅾️)
+    }
 
     local _update_animation_walk = false
 
-    -- move player based on input
-    if btn(⬅️) then
-        _player.x -= _player.speed
-        _player.sp_flipx = true
+    if not _player.dashing then
+        -- reduce dash cooldown if applicable
+        _player.dash_cooldown_current = max(0, _player.dash_cooldown_current - 1)
+        -- move player based on input
+        if buttons_pressed.left then
+            _player.x -= _player.speed
+            _player.sp_flipx = true
+        end
+
+        if buttons_pressed.right then
+            _player.x += _player.speed
+            _player.sp_flipx = false
+        end
+
+        if buttons_pressed.up then
+            _player.y -= _player.speed
+        end
+
+        if buttons_pressed.down then
+            _player.y += _player.speed
+        end
+    else -- player is dashing
+        _player.dash_tick_current += 1
+        local dash_speed = _player.speed + _player.dash_speed_boost
+        _player.x += dash_speed * _player.dash_direction.x
+        _player.y += dash_speed * _player.dash_direction.y
+
+        if _player.dash_tick_current >= _player.dash_tick_max then
+            _player.dashing = false
+            _player.dash_tick_current = 0
+            _player.dash_cooldown_current = _player.dash_cooldown_max
+        end
     end
 
-    if btn(➡️) then
-        _player.x += _player.speed
-        _player.sp_flipx = false
-    end
+    if buttons_pressed.dash
+    and _player.dash_cooldown_current == 0 
+    and not _player.dashing then
+        _player.dashing = true
+        _player.dash_tick_current = 0
+        -- determine dash direction
+        if buttons_pressed.left and buttons_pressed.right then
+            _player.dash_direction.x = 0
+        elseif buttons_pressed.left then
+            _player.dash_direction.x = -1
+        elseif buttons_pressed.right then
+            _player.dash_direction.x = 1
+        else
+            _player.dash_direction.x = 0
+        end
 
-    if btn(⬆️) then
-        _player.y -= _player.speed
-    end
+        if buttons_pressed.up and buttons_pressed.down then
+            _player.dash_direction.y = 0
+        elseif buttons_pressed.up then
+            _player.dash_direction.y = -1
+        elseif buttons_pressed.down then
+            _player.dash_direction.y = 1
+        else
+            _player.dash_direction.y = 0
+        end
 
-    if btn(⬇️) then
-        _player.y += _player.speed
+        -- if no buttons are pressed, dash in the direction the player is facing
+        if _player.dash_direction.x == 0 and _player.dash_direction.y == 0 then
+            _player.dash_direction.x = _player.sp_flipx and -1 or 1
+            _player.dash_direction.y = 0
+        end
     end
 
     -- check collisions

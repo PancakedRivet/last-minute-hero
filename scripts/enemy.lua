@@ -119,7 +119,10 @@ function update_attack_enemy(_enemy)
             if not _enemy.attacked_player then
                 -- check the enemy is within attack range and in front of the player
                 -- y attack range is extended by 4 pixels to attack in a small vertical area
-                if abs(player.x - _enemy.x) < _enemy.attack_range_x and abs(player.y - _enemy.y) < _enemy.attack_range_y + 4 and sgn(player.x - _enemy.x) == (_enemy.sp_flipx and -1 or 1) then
+                if abs(player.x - _enemy.x) < _enemy.attack_range_x 
+                and abs(player.y - _enemy.y) < _enemy.attack_range_y + 4 
+                and sgn(player.x - _enemy.x) == (_enemy.sp_flipx and -1 or 1)
+                and player.dashing == false then
                     player.health -= _enemy.attack
                     _enemy.attacked_player = true
                 end
