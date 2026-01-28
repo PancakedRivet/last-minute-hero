@@ -26,6 +26,13 @@ function update_enemies()
             enemy.y += enemy.speed * y_dir
         end
 
+        -- apply knockback if applicable
+        if enemy.knockback_tick > 0 then
+            enemy.x += enemy.knockback_x * 2 -- knockback speed
+            enemy.knockback_tick -= 1
+        end
+
+
         -- check collisions
         if current_x != enemy.x or current_y != enemy.y then
             collisions = map_collision(enemy, game_flags.collision)
@@ -76,7 +83,9 @@ function new_enemy()
         attacked = false,
         attacked_player = false,
         walk_animation_idx = 1,
-        walk_animation_tick = 0
+        walk_animation_tick = 0,
+        knockback_tick = 0,
+        knockback_x = 0,
     }
     return enemy
 end

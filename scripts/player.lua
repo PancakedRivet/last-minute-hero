@@ -172,6 +172,9 @@ function update_attack(_player)
                     -- check the enemy is within attack range and in front of the player
                     if abs(_player.x - enemy.x) < attack_range and abs(_player.y - enemy.y) < attack_range and sgn(_player.x - enemy.x) == (_player.sp_flipx and 1 or -1) then
                         enemy.health -= _player.attack
+                        -- apply a knockback effect
+                        enemy.knockback_tick = 3
+                        enemy.knockback_x = (_player.sp_flipx and -1 or 1)
                         enemy.attacked = true
                         if enemy.health <= 0 then
                             del(enemies, enemy)
