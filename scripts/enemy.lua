@@ -14,6 +14,20 @@ function update_spawning_enemies()
     end
 end
 
+function update_dying_enemies()
+    for enemy in all(dying_enemies) do
+        -- handle spawn animation
+        if enemy.death_animation_tick > 0 then
+            enemy.death_animation_tick -= 1
+        else
+            -- delete from dying_enemies
+            del(dying_enemies, enemy)
+            -- spawn a coin where the enemy died
+            add(coins, { x = enemy.x, y = enemy.y, sp = game_sprites.coin, current_tick = global_game_tick }) 
+        end
+    end
+end
+
 function update_enemies()
     -- move enemies towards player
     for enemy in all(enemies) do
@@ -96,7 +110,9 @@ function new_enemy()
         knockback_tick = 0,
         knockback_x = 0,
         spawn_animation_tick = 9,
-        spawn_animation_sprites = {56, 57, 58}
+        spawn_animation_sprites = {56, 57, 58},
+        death_animation_tick = 0,
+        death_animation_sprites = {59, 60, 61},
     }
     return enemy
 end
@@ -177,6 +193,15 @@ function draw_spawning_enemies(_spawning_enemies)
     for enemy in all(_spawning_enemies) do
         if enemy.spawn_animation_tick > 0 then
             spr(enemy.spawn_animation_sprites[3 - flr(enemy.spawn_animation_tick / #enemy.spawn_animation_sprites)], enemy.x, enemy.y, 1, 1, enemy.sp_flipx, enemy.sp_flipy)
+        end
+    end
+end
+
+-- draw dying enemies
+function draw_dying_enemies(_dying_enemies)
+    for enemy in all(_dying_enemies) do
+        if enemy.death_animation_tick > 0 then
+            spr(enemy.death_animation_sprites[3 - flr(enemy.death_animation_tick / #enemy.death_animation_sprites)], enemy.x, enemy.y, 1, 1, enemy.sp_flipx, enemy.sp_flipy)
         end
     end
 end

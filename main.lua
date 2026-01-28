@@ -8,6 +8,7 @@ function _init()
     max_enemies = 5
     enemies = {}
     spawning_enemies = {}
+    dying_enemies = {}
     coins = {}
     shop_item_names = {
         health_item_name = "health",

@@ -17,6 +17,7 @@ function update_playing()
     update_position(player)
     update_check_coin_collection(player)
     update_spawning_enemies()
+    update_dying_enemies()
     update_enemies()
     update_attack(player)
 
@@ -51,6 +52,7 @@ function draw_playing(_camera)
     draw_corpse(corpse)
 
     draw_spawning_enemies(spawning_enemies)
+    draw_dying_enemies(dying_enemies)
     draw_enemies(enemies)
     draw_player(player)
     

@@ -53,6 +53,7 @@ function new_game()
     }
     enemies = {}
     spawning_enemies = {}
+    dying_enemies = {}
     coins = {}
     game_tick = 0
     mapx = 0 

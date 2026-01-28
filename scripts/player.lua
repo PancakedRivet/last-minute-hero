@@ -179,7 +179,8 @@ function update_attack(_player)
                         enemy.attacked = true
                         if enemy.health <= 0 then
                             del(enemies, enemy)
-                            add(coins, { x = enemy.x, y = enemy.y, sp = game_sprites.coin, current_tick = global_game_tick }) -- spawn a coin where the enemy died
+                            enemy.death_animation_tick = 9
+                            add(dying_enemies, enemy)
                             _player.score += _player.score_value
                             _player.kill_count += 1
                         end
