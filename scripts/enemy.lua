@@ -51,6 +51,7 @@ end
 
 function new_enemy()
     local enemy_x, enemy_y = spawn_enemy()
+    local health_multiplier = 1 + flr(player.kill_count / 25)
     local enemy = {
         x = enemy_x,
         y = enemy_y,
@@ -58,8 +59,8 @@ function new_enemy()
         h = 7,
         sp_flipx = false,
         sp_flipy = false,
-        health = 20,
-        max_health = 20,
+        health = 10 * health_multiplier,
+        max_health = 10 * health_multiplier,
         speed = 1,
         attack = 2,
         attack_range_x = 8,

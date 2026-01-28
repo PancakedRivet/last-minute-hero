@@ -27,6 +27,7 @@ function new_player()
         defense = 5,
         score = 0,
         score_value = 1,
+        kill_count = 0,
         coins = 0,
         coin_value = 1,
         is_in_shop = false,
@@ -176,6 +177,7 @@ function update_attack(_player)
                             del(enemies, enemy)
                             add(coins, { x = enemy.x, y = enemy.y, sp = game_sprites.coin, current_tick = global_game_tick }) -- spawn a coin where the enemy died
                             _player.score += _player.score_value
+                            _player.kill_count += 1
                         end
                     end
                 end
