@@ -49,7 +49,8 @@ game_music_patterns = {
     none = -1,
     background = 0,
     background_low_health = 1,
-    shop = 2
+    shop = 2,
+    new_game = 3
 }
 
 game_flags = {

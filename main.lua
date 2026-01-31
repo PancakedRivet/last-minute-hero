@@ -53,6 +53,7 @@ function _update()
         game_music.has_changed = false
     end
     if game_state == game_states.new_game then
+        update_music(game_music_patterns.new_game)
         update_new_game()
         return
     end
