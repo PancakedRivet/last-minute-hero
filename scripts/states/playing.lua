@@ -6,6 +6,7 @@ function update_playing()
     end
     if player.health <= 0 then
         game_state = game_states.game_over
+        sfx(game_sfx.game_over)
         return
     end
 

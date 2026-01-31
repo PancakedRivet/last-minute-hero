@@ -200,6 +200,7 @@ function update_attack(_player)
             if not corpse.attacked then
                 if abs(_player.x - corpse.x) < attack_range and abs(_player.y - corpse.y) < attack_range and sgn(_player.x - corpse.x) == (_player.sp_flipx and 1 or -1) then
                     corpse.attacked = true
+                    sfx(game_sfx.corpse_hit)
                     _player.coins += corpse.gold_value
                     _player.score -= corpse.score_penalty
                 end
