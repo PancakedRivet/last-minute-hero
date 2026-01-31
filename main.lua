@@ -48,19 +48,30 @@ end
 -- Core update logic here
 function _update()
     global_game_tick += 1
-    if game_state == game_states.new_game then 
+    if game_music.has_changed then
+        music(game_music.pattern)
+        game_music.has_changed = false
+    end
+    if game_state == game_states.new_game then
         update_new_game()
         return
     end
     if game_state == game_states.game_over then
+        update_music(game_music_patterns.none)
         update_game_over()
         return
     end
     if game_state == game_states.playing then
+        if player.health > flr(player.max_health / 2) then
+            update_music(game_music_patterns.background)
+        else
+            update_music(game_music_patterns.background_low_health)
+        end
         update_playing()
         return
     end
     if game_state == game_states.shop then
+        update_music(game_music_patterns.shop)
         update_shop()
         return
     end

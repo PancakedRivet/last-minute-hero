@@ -4,6 +4,9 @@ function update_playing()
         player.score += 1
         timer_health_tick(player, game_duration_max_secs)
     end
+    if player.health <= flr(player.max_health / 2) then
+        update_music(game_music_patterns.background_low_health)
+    end
     if player.health <= 0 then
         game_state = game_states.game_over
         sfx(game_sfx.game_over)

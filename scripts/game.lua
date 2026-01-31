@@ -36,7 +36,20 @@ game_sfx = {
     shop_open = 11,
     shop_close = 12,
     corpse_hit = 13,
-    game_over = 14
+    game_over = 14,
+    background_music = 15
+}
+
+game_music = {
+    pattern = -1,
+    has_changed = false
+}
+
+game_music_patterns = {
+    none = -1,
+    background = 0,
+    background_low_health = 1,
+    shop = 2
 }
 
 game_flags = {
@@ -106,4 +119,11 @@ function update_animation(_animation_tick, _animation_idx, _animation_sprite_cou
         animation_idx = _animation_idx
     }
     return new_animation
+end
+
+function update_music(pattern)
+    if game_music.pattern != pattern then
+        game_music.pattern = pattern
+        game_music.has_changed = true
+    end
 end
