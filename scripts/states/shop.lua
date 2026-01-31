@@ -9,12 +9,14 @@ end
 function update_shop()
     -- Shop update logic here
     if btnp(❎) then
+        sfx(game_sfx.shop_close)
         game_state = game_states.playing
         return
     end
 
     if btnp(⬆️) then
         shop_selected_index -= 1
+        sfx(game_sfx.shop_menu_movement)
         if shop_selected_index < 1 then
             shop_selected_index = get_shop_exit_index()
         end
@@ -23,6 +25,7 @@ function update_shop()
 
     if btnp(⬇️) then
         shop_selected_index += 1
+        sfx(game_sfx.shop_menu_movement)
         if shop_selected_index > get_shop_exit_index() then
             shop_selected_index = 1
         end
@@ -35,12 +38,16 @@ function update_shop()
         if can_purchase_item(selected_item) then
             player.coins -= selected_item.cost
             selected_item.purchase_func()
+            sfx(game_sfx.shop_purchase)
+        else
+            sfx(game_sfx.shop_insufficient_funds)
         end
         return
     end
 
     -- Player selects the exit option
     if btnp(🅾️) and shop_selected_index == get_shop_exit_index() then
+        sfx(game_sfx.shop_close)
         game_state = game_states.playing
         return
     end

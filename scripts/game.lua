@@ -28,7 +28,15 @@ game_sfx = {
     enemy_die = 3,
     player_hurt = 4,
     player_dash_reset = 5,
-    game_over = 6
+    player_attack = 6,
+    enemy_attack = 7,
+    shop_menu_movement = 8,
+    shop_insufficient_funds = 9,
+    shop_purchase = 10,
+    shop_open = 11,
+    shop_close = 12,
+    corpse_hit = 13,
+    game_over = 14
 }
 
 game_flags = {

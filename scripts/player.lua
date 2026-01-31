@@ -163,6 +163,7 @@ function update_attack(_player)
     -- only attack if not already attacking
     if btnp(❎) and not _player.attacking and _player.attack_tick_cooldown_current == 0 then
         _player.attacking = true
+        sfx(game_sfx.player_attack)
     end
     if _player.attacking then
         _player.attack_tick_current += 1

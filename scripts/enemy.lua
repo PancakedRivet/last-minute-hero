@@ -146,6 +146,9 @@ function update_attack_enemy(_enemy)
     -- only attack if not already attacking
     if _enemy.attack_tick_cooldown_current == 0 then
         _enemy.attack_tick_current += 1
+        if _enemy.attack_tick_current == 1 then
+            sfx(game_sfx.enemy_attack)
+        end
 
         -- update the attack animation 
         _enemy.attack_animation_idx = ceil((_enemy.attack_tick_current / _enemy.attack_tick_stop) * #_enemy.attack_animation_sprites)

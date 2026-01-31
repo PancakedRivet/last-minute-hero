@@ -30,6 +30,7 @@ function update_playing()
     if any_collision(player, game_flags.shop) then
         if not player.is_in_shop then
             game_state = game_states.shop
+            sfx(game_sfx.shop_open)
             shop_selected_index = 1
             player.is_in_shop = true
             return
