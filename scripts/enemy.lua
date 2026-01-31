@@ -161,6 +161,7 @@ function update_attack_enemy(_enemy)
                 and sgn(player.x - _enemy.x) == (_enemy.sp_flipx and -1 or 1)
                 and player.dashing == false then
                     player.health -= _enemy.attack
+                    sfx(game_sfx.player_hurt)
                     _enemy.attacked_player = true
                 end
             end

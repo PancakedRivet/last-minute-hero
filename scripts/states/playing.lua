@@ -12,6 +12,7 @@ function update_playing()
     if count(enemies) + count(spawning_enemies) < max_enemies then
         -- spawn a new enemy
         add(spawning_enemies, new_enemy())
+        sfx(game_sfx.enemy_spawn)
     end
 
     update_position(player)

@@ -39,6 +39,7 @@ function new_player()
         dash_speed_boost = 3,
         dash_direction = {x=0, y=0},
         dash_animation_sprites = {16, 17, 18, 19},
+        dash_played_cooldown_sound = false,
         game_over_cooldown = 30
     }
     return player
@@ -62,6 +63,10 @@ function update_position(_player)
     if not _player.dashing then
         -- reduce dash cooldown if applicable
         _player.dash_cooldown_current = max(0, _player.dash_cooldown_current - 1)
+        if _player.dash_cooldown_current == 0 and not _player.dash_played_cooldown_sound then
+            sfx(game_sfx.player_dash_reset)
+            _player.dash_played_cooldown_sound = true
+        end
         -- move player based on input
         if buttons_pressed.left then
             _player.x -= _player.speed
@@ -97,6 +102,7 @@ function update_position(_player)
     and _player.dash_cooldown_current == 0 
     and not _player.dashing then
         _player.dashing = true
+        _player.dash_played_cooldown_sound = false
         _player.dash_tick_current = 0
         -- determine dash direction
         if buttons_pressed.left and buttons_pressed.right then
@@ -124,6 +130,7 @@ function update_position(_player)
             _player.dash_direction.x = _player.sp_flipx and -1 or 1
             _player.dash_direction.y = 0
         end
+        sfx(game_sfx.player_dash)
     end
 
     -- check collisions
@@ -181,6 +188,7 @@ function update_attack(_player)
                             del(enemies, enemy)
                             enemy.death_animation_tick = 9
                             add(dying_enemies, enemy)
+                            sfx(game_sfx.enemy_die)
                             _player.score += _player.score_value
                             _player.kill_count += 1
                         end
@@ -231,6 +239,7 @@ function update_check_coin_collection(_player)
     for coin in all(coins) do
         if abs(_player.x - coin.x) < 8 and abs(_player.y - coin.y) < 8 then
             _player.coins += _player.coin_value
+            sfx(game_sfx.coin_collect)
             del(coins, coin)
         end
     end

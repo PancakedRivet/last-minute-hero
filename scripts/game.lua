@@ -17,6 +17,20 @@ game_sprites = {
     corpse = 12
 }
 
+-- sound notes
+-- tilted saw = player
+-- noise = enemy
+-- triangle = system
+game_sfx = {
+    coin_collect = 0,
+    player_dash = 1,
+    enemy_spawn = 2,
+    enemy_die = 3,
+    player_hurt = 4,
+    player_dash_reset = 5,
+    game_over = 6
+}
+
 game_flags = {
     collision = 0,
     shop = 1
