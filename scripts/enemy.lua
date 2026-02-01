@@ -37,7 +37,8 @@ function update_enemies()
         local dy = abs(player.y - enemy.y)
         local x_dir = sgn(player.x - enemy.x)
         local y_dir = sgn(player.y - enemy.y)
-        if dx > enemy.attack_range_x then
+        local attack_range_offset = -1 -- enemies try to move into their attack range rather than at the limit
+        if dx > enemy.attack_range_x + attack_range_offset then
             enemy.x += enemy.speed * x_dir
             if x_dir > 0 then
                 enemy.sp_flipx = false
@@ -45,6 +46,7 @@ function update_enemies()
                 enemy.sp_flipx = true
             end
         end
+        -- note: not adding attack offset to y because vertical alignment is less important
         if dy > enemy.attack_range_y then
             enemy.y += enemy.speed * y_dir
         end
@@ -93,7 +95,7 @@ function new_enemy()
         max_health = 10 * health_multiplier,
         speed = 1,
         attack = 2,
-        attack_range_x = 8,
+        attack_range_x = 6,
         attack_range_y = 0,
         attack_tick_current = 1,
         attack_tick_active_start = 2,
