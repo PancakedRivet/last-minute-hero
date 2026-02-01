@@ -1,7 +1,7 @@
 ui_pos = {
-    background = { x0 = 0, y0 = 0, x1 = 128, y1 = 9 },
+    background = { x0 = 0, y0 = 0, x1 = 128, y1 = 10 },
     hp_icon = { x = 1, y = 2 },
-    hp_bar = { x0 = 9, y0 = 2, x1 = 86, y1 = 5 },
+    hp_bar = { x0 = 9, y0 = 1, x1 = 86, y1 = 7 },
     coin_icon = { x = 90, y = 2 },
     coin_text = { x = 97, y = 3 },
     score_icon = { x = 108, y = 2 },
@@ -26,10 +26,11 @@ local function get_bar_colour(_current, _max)
 end
 
 local function draw_hp_text(_current_hp, _max_hp, _camera)
+    local hp_offset = 2 -- stop text touching edge of bar
     print(
         _current_hp .. "/" .. _max_hp,
         ui_pos.hp_bar.x0 + ((ui_pos.hp_bar.x1 - ui_pos.hp_bar.x0) / 2) - (6 * #tostr(_max_hp) / 2) + _camera.x,
-        ui_pos.hp_bar.y0 + _camera.y,
+        ui_pos.hp_bar.y0 + hp_offset + _camera.y,
         colours.white
     )
 end
